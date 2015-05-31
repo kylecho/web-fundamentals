@@ -14,7 +14,4 @@
 * SSH [Link](http://code.tutsplus.com/tutorials/ssh-what-and-how--net-25138)
 * Virtual Machine [Link](http://en.wikipedia.org/wiki/Virtual_machine)
 * Startup Engineering [Link](https://www.coursera.org/course/startup)
-* C++ Repo
-* Java Repo
-* Python Repo
 * iOS App Development Essential Training [Link](http://www.lynda.com/iOS-tutorials/iOS-App-Development-Essential-Training/159179-2.html)
