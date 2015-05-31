@@ -4,6 +4,7 @@
 * Git
 * HTML
 * CSS
+* Bootstrap
 * jQuery
 * Regular Expression
 * Sublime Text: Shortcuts and features
