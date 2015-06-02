@@ -1,5 +1,7 @@
 #Preparatory for Hack Reactor
 
+Self made list to study before I join Hack Reactor.
+
 * Object-Oriented JavaScript [Link](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * Git
 * HTML
