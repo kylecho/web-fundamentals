@@ -1,0 +1,24 @@
+body {
+	background: white;
+}
+
+.content {
+	background: white;
+}
+
+.quote {
+	background: white;
+}
+
+.transport-systems {
+	background: white;
+}
+
+.features .glyphicon {
+	font-size: 32px;
+	color: red;
+}
+
+.footer {
+	color: gray;
+}
