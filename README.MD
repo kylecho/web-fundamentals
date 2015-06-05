@@ -1,4 +1,4 @@
-#Preparatory for Hack Reactor
+#Pre-precoursework for Hack Reactor
 
 Self made list to study before I join Hack Reactor.
 
