@@ -26,10 +26,10 @@ Terminal is a program called a terminal emulator. It opens a window and lets you
 * `ls -l /etc /bin` List the files in the /bin directory and the /etc directory in long format.
 * `ls -la ..` List all files (including hidden) in the parent of the working directory in long format.
 
--rw-------   1 bshotts  bshotts       576 Apr 17  1998 weather.txt
-drwxr-xr-x   6 bshotts  bshotts      1024 Oct  9  1999 web_page
--rw-rw-r--   1 bshotts  bshotts    276480 Feb 11 20:41 web_site.tar
--rw-------   1 bshotts  bshotts      5743 Dec 16  1998 xmas_file.txt
+* -rw-------   1 bshotts  bshotts       576 Apr 17  1998 weather.txt
+* drwxr-xr-x   6 bshotts  bshotts      1024 Oct  9  1999 web_page
+* -rw-rw-r--   1 bshotts  bshotts    276480 Feb 11 20:41 web_site.tar
+* -rw-------   1 bshotts  bshotts      5743 Dec 16  1998 xmas_file.txt
 
 ----------     -------  -------  -------- ------------ -------------
     |             |        |         |         |             |
