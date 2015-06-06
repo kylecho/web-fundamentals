@@ -1,18 +1,18 @@
 #Pre-precoursework for Hack Reactor
 
-Self made list to study before I join Hack Reactor.
+Self made list to study before I join Hack Reactor. I consider them as the "Basics" of the web development. I have named it the "Pre" precoursework for Hack Reactor because I am stuyding it before the pre-coursework.
 
-* Object-Oriented JavaScript [Link](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * Git
 * HTML
 * CSS
 * Bootstrap
 * jQuery
+* Object-Oriented JavaScript [Link](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * Regular Expression
 * Sublime Text: Shortcuts and features
 * A test-driven JS assessment [Link](https://github.com/rmurphey/js-assessment)
 * Recursion [Link](http://reinhard.io/)
-* Linux Fundamentals [Link](http://www.funtoo.org/Linux_Fundamentals,_Part_1)
+* Learning the Shell [Link](http://linuxcommand.org/index.php)
 * Piping and Redirection [Link](http://ryanstutorials.net/linuxtutorial/piping.php)
 * SSH [Link](http://code.tutsplus.com/tutorials/ssh-what-and-how--net-25138)
 * Virtual Machine [Link](http://en.wikipedia.org/wiki/Virtual_machine)
