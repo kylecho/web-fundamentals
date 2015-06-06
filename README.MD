@@ -12,7 +12,7 @@ Self made list to study before I join Hack Reactor. I consider them as the "Basi
 * Sublime Text: Shortcuts and features
 * A test-driven JS assessment [Link](https://github.com/rmurphey/js-assessment)
 * Recursion [Link](http://reinhard.io/)
-* Learning the Shell [Link](http://linuxcommand.org/index.php)
+* [Learning the Shell](https://github.com/kylecho/hackreactor-prep/tree/master/shell)
 * Piping and Redirection [Link](http://ryanstutorials.net/linuxtutorial/piping.php)
 * SSH [Link](http://code.tutsplus.com/tutorials/ssh-what-and-how--net-25138)
 * Virtual Machine [Link](http://en.wikipedia.org/wiki/Virtual_machine)
