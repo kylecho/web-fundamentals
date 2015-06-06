@@ -28,10 +28,11 @@ Terminal is a program called a terminal emulator. It opens a window and lets you
 
 ####Visualization:
 
-* -rw-------   1 bshotts  bshotts       576 Apr 17  1998 weather.txt
-* drwxr-xr-x   6 bshotts  bshotts      1024 Oct  9  1999 web_page
-* -rw-rw-r--   1 bshotts  bshotts    276480 Feb 11 20:41 web_site.tar
-* -rw-------   1 bshotts  bshotts      5743 Dec 16  1998 xmas_file.txt
+```
+-rw-------   1 bshotts  bshotts       576 Apr 17  1998 weather.txt
+drwxr-xr-x   6 bshotts  bshotts      1024 Oct  9  1999 web_page
+-rw-rw-r--   1 bshotts  bshotts    276480 Feb 11 20:41 web_site.tar
+-rw-------   1 bshotts  bshotts      5743 Dec 16  1998 xmas_file.txt
 
 ----------     -------  -------  -------- ------------ -------------
     |             |        |         |         |             |
@@ -46,6 +47,7 @@ Terminal is a program called a terminal emulator. It opens a window and lets you
     |             +--------------------------------        Owner
     |
     +----------------------------------------------   File Permissions
+```
 
 ####Less (Text file viwer)
 * To view a text file, `less text_file`
@@ -71,8 +73,8 @@ Terminal is a program called a terminal emulator. It opens a window and lets you
 
 ####Interesting directories and their contents
 
-* /bin - contains most of the programs for the system. The /bin directory has the essential programs that the system requires to operate.
-* /etc - contains the configuration files for the system.
+* `/bin` - contains most of the programs for the system. The /bin directory has the essential programs that the system requires to operate.
+* `/etc` - contains the configuration files for the system.
 * For full example, visit the original link.
 
 ###5. Manipulating Files
@@ -89,26 +91,26 @@ For example, how would you copy all the HTML files from one directory to another
 
 ####Wildcards
 
-* * - Matches any characters
-* ? - Matches any single character
-* [characters] - Matches any character that is a member of the set characters.
-* [:alnum:] - Alphanumeric characters
-* [:alpha:] - Alphabetic characters
-* [:digit:] - Numerals
-* [:upper:] - Uppercase alphabetic characters
-* [:lower:] - Lowercase alphabetic characters
-* [!characters] - Matches any character that is not a member of the set characters
+* `*` - Matches any characters
+* `?` - Matches any single character
+* `[characters]` - Matches any character that is a member of the set characters.
+* `[:alnum:]` - Alphanumeric characters
+* `[:alpha:]` - Alphabetic characters
+* `[:digit:]` - Numerals
+* `[:upper:]` - Uppercase alphabetic characters
+* `[:lower:]` - Lowercase alphabetic characters
+* `[!characters]` - Matches any character that is not a member of the set characters
 
 ####Examples of wildcard matching
 
-* * - All filenames
-* g* - All filenames that begin with the character "g" 
-* b*.txt - All filenames that begin with the character "b" and end with the characters ".txt"
-* Data??? - Any filename that begins with the character "Data" followed by exactly 3 more characters
-* [abc]* - Any filename that begins with "a" or "b" or "c" followed by any other characters
-* [[:upper:]]* - Any filename that begins with an uppercase letter. This is an example of a character class.
-* BACKUP.[[:digit:]][[:digit:]] - Another example of character classes. This pattern matches any filename that begins with the characters "BACKUP." followed by exactly two numerals.
-* *[![:lower:]] - Any filename that does not end with a lowercase letter.
+* `*` - All filenames
+* `g*` - All filenames that begin with the character "g" 
+* `b*.txt` - All filenames that begin with the character "b" and end with the characters ".txt"
+* `Data???` - Any filename that begins with the character "Data" followed by exactly 3 more characters
+* `[abc]*` - Any filename that begins with "a" or "b" or "c" followed by any other characters
+* `[[:upper:]]*` - Any filename that begins with an uppercase letter. This is an example of a character class.
+* `BACKUP.[[:digit:]][[:digit:]]` - Another example of character classes. This pattern matches any filename that begins with the characters "BACKUP." followed by exactly two numerals.
+* `*[![:lower:]]` - Any filename that does not end with a lowercase letter.
 
 You can use wildcards with any command that accepts filename arguments.
 
