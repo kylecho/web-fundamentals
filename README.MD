@@ -9,7 +9,7 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * jQuery
 * [Browser Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/BOM)
 * [Document Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/DOM)
-* [Object-Oriented JavaScript](https://github.com/kylecho/js-final-prep/blob/master/object-oriented-javascript.js)
+* [Object-Oriented JavaScript](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * [HTTP and REST](https://github.com/kylecho/hackreactor-prep/tree/master/httprest)
 * [Regular Expression](http://regex.learncodethehardway.org/book/)
 * Sublime Text: Shortcuts and features
