@@ -7,7 +7,9 @@ Self made list to study before I join Hack Reactor. I consider them as the "Basi
 * CSS
 * [Bootstrap](https://github.com/kylecho/hackreactor-prep/tree/master/bootstrap)
 * jQuery
-* Object-Oriented JavaScript [Link](https://www.udacity.com/course/object-oriented-javascript--ud015)
+* [Browser Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/BOM)
+* [Document Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/DOM)
+* [Object-Oriented JavaScript](https://github.com/kylecho/js-final-prep/blob/master/object-oriented-javascript.js)
 * Regular Expression
 * Sublime Text: Shortcuts and features
 * [A test-driven JS assessment](https://github.com/kylecho/hackreactor-prep/tree/master/js-assessment-master)
