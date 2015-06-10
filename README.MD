@@ -14,7 +14,7 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * [Regular Expression](http://regex.learncodethehardway.org/book/)
 * Sublime Text: Shortcuts and features
 * [A test-driven JS assessment](https://github.com/kylecho/hackreactor-prep/tree/master/js-assessment-master)
-* Recursion [Link](http://reinhard.io/)
+* [Recursion](http://reinhard.io/)
 * [Learning the Shell](https://github.com/kylecho/hackreactor-prep/tree/master/shell)
 * [Piping and Redirection](http://ryanstutorials.net/linuxtutorial/piping.php)
 * [SSH](http://code.tutsplus.com/tutorials/ssh-what-and-how--net-25138)
