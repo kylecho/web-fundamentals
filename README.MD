@@ -2,7 +2,7 @@
 
 A Self made list to study before I join Hack Reactor. I consider them as the "Basics" of the web development. More specifically, I have named it the "Pre" precoursework for Hack Reactor because I am stuyding it prior to the actual pre-coursework. The below list will redirect to the sub-repositories within this repository. There you can find the summary and the link to the original resource.
 
-* Git
+* [Git](https://guides.github.com/)
 * HTML
 * CSS
 * [Bootstrap](https://github.com/kylecho/hackreactor-prep/tree/master/bootstrap)
