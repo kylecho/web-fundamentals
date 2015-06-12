@@ -236,7 +236,7 @@ document.getElementById("p1").innerHTML = "New text!";
 </html>
 ```
 
-This example changes the content of an <h1> element:
+This example changes the content of an `<h1>` element:
 
 ```
 <!DOCTYPE html>
