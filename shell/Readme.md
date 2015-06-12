@@ -611,7 +611,7 @@ Here we can see:
 | |  |  |
 | |  |	+------------------------------------------   Read, write, and execute permissions for all other users
 | |  |
-| |  |+--------------------------------------------   Read, write, and execute permissions for the group owner of the file
+| |  +---------------------------------------------   Read, write, and execute permissions for the group owner of the file
 | |
 | +------------------------------------------------   Read, write, and execute permissions for the file owner
 |
