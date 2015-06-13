@@ -11,6 +11,7 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * [Document Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/DOM)
 * [Object-Oriented JavaScript](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * [HTTP and REST](https://github.com/kylecho/hackreactor-prep/tree/master/httprest)
+* [Foundations of Programming: Databases](https://github.com/kylecho/hackreactor-prep/tree/master/database)
 * [Regular Expression](http://regex.learncodethehardway.org/book/)
 * Sublime Text: Shortcuts and features
 * [A test-driven JS assessment](https://github.com/kylecho/hackreactor-prep/tree/master/js-assessment-master)

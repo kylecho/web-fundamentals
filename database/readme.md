@@ -49,14 +49,14 @@ Sometimes business have more than one DBMS.
 ```
 Relational DBMS| NoSQL DBMS| Hierarchical DBMS | Network DBMS | Object-Oriented DBMS |
 --------------------------------------------------------------------------------------
-Oracle         | Cassandra
-SQL Server     | CouchDB
-DB2            | MongoDB
-MySQL          | ...
-PostgreSQL
-SQLite
-MS Access
-...
+Oracle         | Cassandra |         .         |       .      |           .          |
+SQL Server     | CouchDB   |         .         |       .      |           .          |
+DB2            | MongoDB   |         .         |       .      |           .          |
+MySQL          |     .     |                   |              |                      |
+PostgreSQL     |     .     |                   |              |                      |
+SQLite         |     .     |                   |              |                      |
+MS Access      |           |                   |              |                      |
+       .       |           |                   |              |                      |
 
 ``` 
 
@@ -64,18 +64,18 @@ MS Access
 
 ```
 +----------------+
-|                |    Database: your data and your rules
+|                |  * Database: your data and your rules
 |  +----------+  |
 |  |          |  |
-|  |  table   |  |    Table: repeating information of data; colums and rows 
+|  |  table   |  |  * Table: repeating information of data; colums and rows 
 |  |          |  |
-|  +----------+  |    Colums: Each column represents one piece of data; name and type; (imposing rules)
+|  +----------+  |  * Colums: Each column represents one piece of data; name and type; (imposing rules)
 |                |
-|  +----------+  |    Rows: Each row represents one single order, customer, or employee (structured)
+|  +----------+  |  * Rows: Each row represents one single order, customer, or employee (structured)
 |  |          |  |
-|  |  table   |  |    Unique: Settings for a column: unique or not unique; meaning that rows will be unique or not
+|  |  table   |  |  * Unique: Settings for a column: unique or not unique; meaning that rows will be unique or not
 |  |          |  |
-|  +----------+  |    Primary Key (PK): Unique ID for the table, most important for a table 
+|  +----------+  |  * Primary Key (PK): Unique ID for the table, most important for a table 
 |                |
 +----------------+
 ```
@@ -103,19 +103,19 @@ Examples:
 
 ```
 +------------+           /+------------+
-| Customer   |------------| Order      |  One Customer "has many" Orders
+| Customer   |------------| Order      |  * One Customer "has many" Orders
 +------------+           \+------------+
 
 +------------+ 1 infinity +------------+
-| Category   |------------| Products   |  One Category "has infinity" Products
+| Category   |------------| Products   |  * One Category "has infinity" Products
 +------------+            +------------+
 
 +------------+           /+------------+
-| Department |------------| Employees  |  One Department "has many" Employees
+| Department |------------| Employees  |  * One Department "has many" Employees
 +------------+           \+------------+
 
 +------------+           /+------------+
-| Classroom  |------------| Students   |  One Classroom "has many" Students
+| Classroom  |------------| Students   |  * One Classroom "has many" Students
 +------------+           \+------------+
 ```
 
@@ -133,8 +133,8 @@ Visualized "Many-to-Many" relationships
 
 ```
              +------------+------------+------------+------------+
-Author       | AuthorID   | FirstName  | LastName   | Email      |
-table        +------------+------------+------------+------------+
+"Author"     | AuthorID   | FirstName  | LastName   | Email      |
+ table       +------------+------------+------------+------------+
              | 445        | Tucker     | Morrison   | tucker@... |
              +------------+------------+------------+------------+
              | 446        | Robert     | Allen      | rob@...    |
@@ -145,11 +145,11 @@ table        +------------+------------+------------+------------+
                     |
                    /|\
 +------------+------------+
-| Customer   | Order      |      AuthorBook or BookAuthor
-+------------+------------+      table         table
+| Customer   | Order      |     "AuthorBook"    "BookAuthor"
++------------+------------+        table     or    table
 | 1145       | 447        |
-+------------+------------+      junction or linking table
-| 1145       | 445        |
++------------+------------+
+| 1145       | 445        |     "junction" or "linking" table
 +------------+------------+
 | 1146       | 446        |
 +------------+------------+
@@ -159,7 +159,7 @@ table        +------------+------------+------------+------------+
       |
       |
 +------------+---------------------+------------+------------+
-| BookID     | Title               | PubDate    | ListPrice  |      Book
+| BookID     | Title               | PubDate    | ListPrice  |     "Book"
 +------------+---------------------+------------+------------+      table
 | 1145       | Designing Databases | 3/1/2012   | $45.00     |
 +------------+---------------------+------------+------------+
