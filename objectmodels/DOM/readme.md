@@ -422,29 +422,343 @@ document.getElementById("myBtn").onclick = displayDate;
 </script>
 ```
 
+### The onload and onunload Events
 
+The onload and onunload events are triggered when the user enters or leaves the page.
 
+The onload event can be used to check the visitor's browser type and browser version, and load the proper version of the web page based on the information.
 
+The onload and onunload events can be used to deal with cookies.
 
+`<body onload="checkCookies()">`
 
+### The onchange Event
 
+The onchange event are often used in combination with validation of input fields.
 
+Below is an example of how to use the onchange. The upperCase() function will be called when a user changes the content of an input field.
 
+`<input type="text" id="fname" onchange="upperCase()">`
 
+### The onmouseover and onmouseout Events
 
+The onmouseover and onmouseout events can be used to trigger a function when the user mouses over, or out of, an HTML element.
 
+### More Examples
 
-
-
-
-
-
-
-
+* `onmousedown` - triggered when mouse button is clicked
+* `onmouseup` - triggered when the mouse button is released
+* `onclick` - triggered when the mouse click is completed
 
 # DOM EventListener
 
+### The addEventListener() method
+
+Add an event listener that fires when a user clicks a button:
+
+`document.getElementById("myBtn").addEventListener("click", displayDate);`
+
+The addEventListener() method attaches an event handler to an element without overwriting existing event handlers.
+
+* You can add many event handlers to one element.
+* You can add many event handlers of the same type to one element, i.e. two "click" events.
+* You can add event listeners to any DOM object not only HTML elements. i.e. the window object.
+* The addEventListener() method makes it easier to control how the event reacts to bubbling.
+
+When using the addEventListener() method, the JavaScript is separated from the HTMl markup, for better readability and allows you to add event listeners even when you do not control the HTML markup.
+
+You can easily remove an event listener by using the removeEventListener() method.
+
+### Syntax
+
+`element.addEventListener(event, function, useCapture)`
+
+* The first parameter is the type of the event (like "click" or "mousedown")
+* The second parameter is the function we want to call when the event occurs
+* The third parameter is a boolean value specifying whether to use event bubbling or even capturing. This parameter is optional.
+
+Note that you don't use the "on" prefix for the event; use "click" instead of "onclick".
+
+### Add an Event Handler to an Element
+
+Alert "Hello World!" when the user clicks on an element:
+
+`element.addEventListener("click", function(){ alert("Hello World!"); });`
+
+You can also refer to an external "named" function:
+
+```
+element.addEventListener("click", myFunc);
+
+function myFunc() {
+	alert("Hello World!");
+}
+```
+
+### Add Many Event Handlers to the Same Element
+
+The addEventListener() method allows you to add many events to the same element, without overwriting existing events:
+
+```
+element.addEventListener("click", myFunction);
+element.addEventListener("click", mySecondFunction);
+```
+
+You can add events of different types to the same element:
+
+```
+element.addEventListener("mouseover", myFunction);
+element.addEventListener("click", mySecondFunction);
+element.addEventListener("mouseout", myThirdFunction);
+```
+### Add an Event Handler to the Window Object
+
+The addEventListener() method allows you to add event listeners on any HTML DOM object such as HTML elements, the HTML document, the window ojbect, or other object that supports events, like the xmlHttpRequest object.
+
+Add an event listener that fires when a user resizes the window:
+```
+window.addEventListener("resize", function(){
+	document.getElementById("demo").innerHTML = sometext;
+});
+```
+
+### Passing Parameters
+
+When passing parameter values, use an "anonymous function" that calls the specified function with the parameters:
+
+```
+element.addEventListener("click", function(){
+	myFunction(p1, p2);
+});
+```
+
+### Event Bubbling or Event Capturing
+
+There are two ways of event propagation in the HTML DOM, bubbling and capturing.
+
+Event propagation is a way of defining the element order when an event occurs. If you have a <p> element inside a <div> element, and the user clicks on the <p> element, which element's "click" event should be handled first?
+
+In bubbling the inner most element's event is handled first and then the outer: the <p> element's click event is handled first, then the <div> element's click event.
+
+In capturing the outer most element's event is handled first and then the inner: the <div> element's click event will be handled first, then the <p> element's click event.
+
+With the addEventListener() method you can specify the propagation type by using the "useCapture" parameter:
+
+addEventListener(event, function, useCapture);
+The default value is false, which will use the bubbling propagation, when the value is set to true, the event uses the capturing propagation.
+
+```
+document.getElementById("myP").addEventListener("click", myFunction, true);
+document.getElementById("myDiv").addEventListener("click", myFunction, true);
+```
+
+### The removeEventListener() method
+
+The removeEventListener() method removes event handlers that have been attached with the addEventListener() method:
+
+`element.removeEventListener("mousemove", myFunction);`
+
 # DOM Navigation
+
+### Node
+
+A node is a basic unit used in computer science. Nodes are devices or data points on a larger network. Devices such as a personal computer, cell phone, or printer are nodes. When defining nodes on the internet, a node is anything that has an IP address. Nodes are individual parts of a larger data structure, such as linked lists and tree data structures. Nodes contain data and also may link to other nodes. Links between nodes are often implemented by pointers.
+
+### Nodes and trees
+
+Nodes are often arranged into tree structures. These structures are binary trees.
+
+A node represents the information contained in a single structure. These nodes may contain a value or condition, or possibly serve as another independent data structure. Nodes are represented by a single parent node. The highest point on a tree structure is called a root node, which does not have a parent node, but serves as the parent or 'grandparent' of all of the nodes below it in the tree. The height of a node is determined by the longest path from root node to the furthest leaf node, and the height of the tree is equal to the height of the root node. Node depth is determined by the distance between that particular node and the root node. The root node is said to have a depth of zero. Data can be discovered along these network paths. An IP address uses this kind of system of nodes to define its location in a network.
+
+Definitions
+
+* Child: A child node is a node extending from another node. For example, a computer with internet access could be considered a child node of a node representing the internet. The inverse relationship is that of a parent node. If node C is a child of node A, then A is the parent node of C.
+* Degree: the degree of a node is the number of children of the node.
+* Depth: the depth of node A is the length of the path from A to the root node. The root node is said to have depth 0.
+* Edge: the connection between nodes.
+* Forest: a set of trees.
+* Height: the height of node A is the length of the longest path through children to a leaf node.
+* Internal node: a node with at least one child.
+* Leaf node: a node with no children.
+* Root node: a node distinguished from the rest of the tree nodes. Usually, it is depicted as the highest node of the tree.
+* Sibling nodes: these are nodes connected to the same parent node.
+
+### DOM Nodes
+
+According to the W3C HTML DOM standard, everything in an HTML document is a node:
+
+* The entire document is a document node
+* Every HTML element is an element node
+* The text inside HTML elements are text nodes
+* Every HTML attribute is an attribute node
+* All comments are comment nodes
+
+Node Types
+
+Different W3C World Wide Web Consortium node types and descriptions:
+
+* Document - represents the entire document (the root-node of the DOM tree)
+* DocumentFragment - represents a "lightweight" Document object, which can hold a portion of a document
+* DocumentType - provides an interface to the entities defined for the document
+* ProcessingInstruction - represents a processing instruction
+* EntityReference - represents an entity reference
+* Element - represents an element
+* Attr - represents an attribute
+* Text - represents textual content in an element or attribute
+* CDATASection - represents a CDATA section in a document (text that will NOT be parsed by a parser)
+* Comment - represents a comment
+* Entity - represents an entity
+* Notation - represents a notation declared in the DTD
+
+### Node Relationships
+
+The nodes in the node tree have a hierarchical relationship to each other. The terms parent, child, and sibling are used to describe the relationships.
+
+* In a node tree, the top node is called the root (or root node)
+* Every node has exactly one parent, except the root (which has no parent)
+* A node can have a number of children
+* Siblings (brothers or sisters) are nodes with the same parent
+
+```
+<html>
+    
+  <head>
+    <title>DOM Tutorial</title>
+  </head>
+
+  
+  <body>
+    <h1>DOM Lesson one</h1>
+    <p>Hello world!</p>
+  </body>
+
+</html>
+
+
+//Visual Notation
+
+Root element     parentNode
+  <html><-----------------+
+    |                     |
+    |                     |
+    |                     |                   
+    |   firstChild        |              ---+ childNodes to <html>
+    +----------------->Element:             | and sibligs to each other
+    |                  |<head>^             |
+    |                  |      |             |
+    |          nextsibling  previoussibling |
+    |                  |      |             |
+    |                  |      |             |
+    |   lastChild      ^      |             |
+    +----------------->Element:             |
+                        <body>              |
+                                         ---+
+```
+
+From the HTML above you can read:
+
+* `<html>` is the root node
+* `<html>` has no parents
+* `<html>` is the parent of `<head>` and `<body>`
+* `<head>` is the first child of `<html>`
+* `<body>` is the last child of `<html>`
+
+and:
+
+* `<head>` has one child: `<title>`
+* `<title>` has one child (a text node): "DOM Tutorial"
+* `<body>` has two children: `<h1>` and `<p>`
+* `<h1>` has one child: "DOM Lesson one"
+* `<p>` has one child: "Hello world!"
+* `<h1>` and `<p>` are siblings
+
+### Navigating Between Nodes
+
+You can use the following node properties to navigate between nodes with JavaScript:
+
+* `parentNode`
+* `childNodes[nodenumber]`
+* `firstChild`
+* `lastChild`
+* `nextSibling`
+* `previousSibling`
+
+### Text Node
+
+In this example: <title>DOM Tutorial</title>, the element node <title> does not contain text. It contains a `text node` with the value "DOM Tutorial".
+
+The value of the text node can be accessed by the node's `innerHTML` property, or the `nodeValue`.
+
+###Child Nodes and Node Values
+
+In addition to the `innerHTML` property, you can also use the `childNodes` and `nodeValue` properties to get the content of an element.
+
+The following example collects the node value of an <h1> element and copies it into a <p> element:
+
+```
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Node Example</title>
+</head>
+<body>
+
+<h1 id="intro">My First Page</h1>
+<p id="demo">Hello!</p>
+
+<script>
+var myText = document.getElementById("intro").childNodes[0].nodeValue;
+document.getElementById("demo").innerHTML = myText;
+</script>
+
+</body>
+</html>
+```
+
+For the above example, using `firstChild` property is the same as using `childNodes[0]`.
+
+### DOM Root Nodes
+
+There are two special properties that allow access to the full document:
+
+* `document.body` - The body of the document
+* `document.documentElement` - The full document
+
+### The nodeName Property
+
+The nodeName property specifies the name of a node:
+
+* nodeName is read-only
+* nodeName of an element node is the same as the tag name
+* nodeName of an attribute node is the attribute name
+* nodeName of a text node is always #text
+* nodeName of the document node is always #document
+
+Note: nodeName always contains the uppercase tag name of an HTML element.
+
+### The nodeValue Property
+
+The nodeValue property specifies the value of a node:
+
+* nodeValue for element node is undefined
+* nodeValue for text nodes is the text itself
+* nodeValue for attribute nodes is the attribute value
+
+### The nodeType Property
+
+The nodeType property returns the type of node. nodeType is read-only.
+
+The most important node types are:
+
+```
+Element type                           NodeType
+-----------------------------------------------------------------------
+Element                                1
+Attribute                              2
+Text                                   3
+Comment                                8
+Document                               9
+```
 
 # DOM Nodes
 
