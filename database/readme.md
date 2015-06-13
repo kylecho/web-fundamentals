@@ -2,12 +2,12 @@
 
 ## Problems Database Solves
 
-* Size - how big is the database? what happens when it gets really big?
-* Ease of Updating - How many people update the database? 10 people? 100 people?
-* Accuracy - Any blank field? typos?
-* Security - Who gets the access to the data?
-* Redundancy - Duplicates, which one is true?
-* Importance - Data can be critical to business
+* **Size**             - how big is the database? what happens when it gets really big?
+* **Ease of Updating** - How many people update the database? 10 people? 100 people?
+* **Accuracy**         - Any blank field? typos?
+* **Security**         - Who gets the access to the data?
+* **Redundancy**       - Duplicates, which one is true?
+* **Importance**       - Data can be critical to business
 
 ## What is Database?
 
@@ -25,10 +25,10 @@ These aren't databases! These are the Database Management Systems (DBMS).
 
 ```
 +----------------+
-|                |    DBMS software: surrounds your databases
+|                |  * DBMS software: surrounds your databases
 |  +----------+  |
 |  |          |  |
-|  | database |  |    Database: your data and your rules
+|  | database |  |  * Database: your data and your rules
 |  |          |  |
 |  +----------+  |
 |                |
@@ -140,11 +140,11 @@ Visualized "Many-to-Many" relationships
              | 446        | Robert     | Allen      | rob@...    |
              +------------+------------+------------+------------+
              | 447        | Jordan     | Winters    | jw1965@... |
-             +------------+------------+------------+------------+
+             +------+-----+------------+------------+------------+
                     |
                     |
                    /|\
-+------------+------------+
++------------+------+-----+
 | Customer   | Order      |     "AuthorBook"    "BookAuthor"
 +------------+------------+        table     or    table
 | 1145       | 447        |
@@ -154,11 +154,11 @@ Visualized "Many-to-Many" relationships
 | 1146       | 446        |
 +------------+------------+
 | 1147       | 447        |
-+------------+------------+
++-----+------+------------+
      \|/
       |
       |
-+------------+---------------------+------------+------------+
++-----+------+---------------------+------------+------------+
 | BookID     | Title               | PubDate    | ListPrice  |     "Book"
 +------------+---------------------+------------+------------+      table
 | 1145       | Designing Databases | 3/1/2012   | $45.00     |
@@ -174,10 +174,10 @@ Transaction is incredibly important.
 
 ### ACID
 
-* A: Atomic - indivisible - the transaction completely happens or not at all - all or nothing
-* C: Consistent - any transaction must take the database from one valid state to another valid state based on the rules 
-* I: Isolated - locked for the moment when transaction is processing
-* D: Durable - robust - once transaction is successful, it will be successful
+* **A** : Atomic - indivisible - the transaction completely happens or not at all - all or nothing
+* **C** : Consistent - any transaction must take the database from one valid state to another valid state based on the rules 
+* **I** : Isolated - locked for the moment when transaction is processing
+* **D** : Durable - robust - once transaction is successful, it will be successful
 
 ACID principal is featured in all Relational Database Systems.
 
