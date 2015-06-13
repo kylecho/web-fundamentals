@@ -685,7 +685,7 @@ You can use the following node properties to navigate between nodes with JavaScr
 
 ### Text Node
 
-In this example: <title>DOM Tutorial</title>, the element node <title> does not contain text. It contains a `text node` with the value "DOM Tutorial".
+In this example: `<title>`DOM Tutorial`</title>`, the element node `<title>` does not contain text. It contains a `text node` with the value "DOM Tutorial".
 
 The value of the text node can be accessed by the node's `innerHTML` property, or the `nodeValue`.
 
@@ -693,7 +693,7 @@ The value of the text node can be accessed by the node's `innerHTML` property, o
 
 In addition to the `innerHTML` property, you can also use the `childNodes` and `nodeValue` properties to get the content of an element.
 
-The following example collects the node value of an <h1> element and copies it into a <p> element:
+The following example collects the node value of an `<h1>` element and copies it into a `<p>` element:
 
 ```
 <!DOCTYPE html>
@@ -762,4 +762,128 @@ Document                               9
 
 # DOM Nodes
 
+### Creating New HTML Elements (Nodes)
+
+To add a new element to the HTML DOM, you must create the element (element node) first, and then append it to an existing element.
+
+```
+<div id="div1">
+	<p id="p1">This is a paragraph.</p>
+	<p id="p2">This is another paragraph.</p>
+</div>
+
+<script>
+	var para = document.createElement("p");             // <p> element is created
+	var node = document.createTextNode("This is new."); // "This is new." text node is created
+	para.appendChild(node);                             // text node is appended to <p> element
+
+	var element = document.getElementById("div1");      // element with id "div1" element is selected
+	element.appendChild(para); // <p> element is appended to the existing <div> with id "div1"
+</script>
+```
+### Creating new HTML Elements - insertBefore()
+
+The `appendChild()` method in the previous example, appended the new element as the last child of the parent.
+
+If you don't want that, you can use the insertBefore() method:
+
+```
+<div id="div1">
+	<p id="p1">This is a paragraph.</p>
+	<p id="p2">This is another paragraph.</p>
+</div>
+
+<script>
+	var para = document.createElement("p");
+	var node = document.createTextNode("This is new.");
+	para.appendChild(node);
+
+	var element = document.getElementById("div1");
+	var child = document.getElementById("p1");
+	element.insertBefore(para,child); // inserting the new <p> before <p> with id "p1"
+</script>
+```
+
+### Removing Existing HTML Elements
+
+To remove an HTML element, you must know the parent of the element:
+
+```
+<div id="div1">
+	<p id="p1">This is a paragraph.</p>
+	<p id="p2">This is another paragraph.</p>
+</div>
+
+<script>
+	var parent = document.getElementById("div1");
+	var child = document.getElementById("p1");
+	parent.removeChild(child);
+</script>
+```
+
+Here is a common workaround: Find the child you want to remove, and use its parentNode property to find the parent:
+
+```
+var child = document.getElementById("p1");
+child.parentNode.removeChild(child);
+```
+
+### Replacing HTML Elements
+
+To replace an element to the HTML DOM, use the replaceChild() method:
+
+```
+<div id="div1">
+	<p id="p1">This is a paragraph.</p>
+	<p id="p2">This is another paragraph.</p>
+</div>
+
+<script>
+	var para = document.createElement("p");
+	var node = document.createTextNode("This is new.");
+	para.appendChild(node);
+
+	var parent = document.getElementById("div1");
+	var child = document.getElementById("p1");
+	parent.replaceChild(para, child);
+</script>
+```
+
 # DOM Nodelist
+
+### HTML DOM Node List
+
+The `getElementByTagName()` method returns a node list. A node list is an array-like collection of nodes.
+
+The following code selects all `<p>` nodes in a document:
+
+`var x = document.getElementByTagName("p");`
+
+The nodes can be accessed by an index number. To access the second `<p>` node you can write:
+
+`var y = x[1];`
+
+### HTML DOM Node List Length
+
+The length property defines the number of nodes in a node list:
+
+```
+var myNodeList = document.getElementByTagName("p");
+document.getElementById("demo").innerHTML = myNodeList.length;
+```
+
+The length property is useful when you want to loop through the nodes in a node list:
+
+Below example will change the background color of all `<p>` elements in a node list:
+
+```
+var myNodeList = document.getElementsByTagName("p");
+var i;
+for (i = 0; i < myNodeList.length; i++) {
+	myNodeList[i].style.backgroundColor = "red";
+}
+```
+
+Node: A node list is not an array
+
+A node list may look like an array, but it is not. You can loop through the node list and refre to its nodes like an array. However, you cannot use Array Methods on the node list.
