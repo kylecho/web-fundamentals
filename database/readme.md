@@ -340,31 +340,116 @@ We are interested in the relationships between entities only. Methods, inheritan
 ```
 
 ## Identifying Columns and Selecting Data Types
- 
+
+After figuring out a list of what entities need to exist, you take a look at each one to specify exactly what data is important to store about that.
+
+### Entities and Attributes
 
 
+```
+ ------------            
+( name       )-----+           
+ ------------      |     
+                   |           
+ ------------      |                                     
+( email      )-----+                                 
+ ------------      |       +------------+         
+                   +-------+ Customer   |             
+ ------------      |       +------------+        
+( address    )-----+          entity                  
+ ------------      |                         
+                   |
+ ------------      |     
+( phone      )-----+      
+ ------------ 
+  attributes
+
+```
+
+As a rule, when defining a table, say "Employee", you are going to go as individual as possible. That way you can do more things with the data for example, you can sort your data without extracting anything.
+
+```
+Decide how you want to name your attributes:
+FirstName or first_name, firstname, fName, strFirstName, firstName, etc.
 
 
+Attributes    Kind of Data     Default Data
+-------------------------------------------------------------------------------------------------
+FirstName     character        not NULL
+LastName      character        not NULL
+DataHired     date             not NULL    default: today
+SalaryGrade   integer          not NULL
+AddressLine1  character        not NULL
+AddressLine2  character        NULL
+City          character        not NULL
+State         character(2)     not NULL
+Zip           character        not NULL
+Email         character        not NULL    pattern match: email
+Photo         binary           NULL
+(etc.)
+```
+When you get in to use a specific DBMS, you will just have a cheat-sheet or bookmark of all the available data types until you know get to know  them.
 
+Flexibility is usually our friend in programming, but it is not what you are looking for in most Relational Databases. What you are hoping to end up with is that for each table (each entity) you have you will have a reasonable list of the columns to create and data allowed in each column. Defining your column as exactly as possible means that your database will enforce these rules on those columns and your data will stay valid and consistent.
 
+## Choosing Primary Keys
 
+Each value should have a primary key. Each employee, customer, book needs to have a unique primary key, and we need a column that is used for the primary key. But DBMS can choose a primary key using an existing column for example ISBN.
 
+```
++------------+-------------------------------+------------+------------+-----+
+| ISBN       | Title                         | ReleaseDate| ListPrice  | ... |
++------------+-------------------------------+------------+------------+-----+
+| 1596717521 | JavaScript Essential Training | 6/1/2011   | $149.95    |     |
++------------+-------------------------------+------------+------------+-----+
+| 321158814  | Building Rich Internet Apps   | 3/2/2003   | $39.95     |     |
++------------+-------------------------------+------------+------------+-----+
+| 765359146  | Red                           | 11/1/2008  | $7.95      |     |
++------------+-------------------------------+------------+------------+-----+
+Primary Key(PK)
+ (natural key)
 
+```
+In some many case, it doesn't occur. For example, Customer table will not have a column for primary key. FirstName, LastName, Email, Address, etc can all be shared. They do not gurantee to be unique. In this case, we would just add a CustomerID column.
 
+* CustomerID - Primary Key(PK), integer, auto-increment.
 
+## Using Composite Keys
 
+One option for primary key you may find useful is something called "composite keys". This is when two rows combine together to make a unique key.
 
+Example, Yearbook:
 
+```
++---------------------+------+-----------+-----------+--------------+-----+
+| School              | Year | ListPrice | PageCount | UnitsInStock | ... |
++---------------------+------+-----------+-----------+--------------+-----+
+| Orchard High        | 2010 | $29.95    | 144       | 32           |     |
++---------------------+------+-----------+-----------+--------------+-----+
+| Orchard High        | 2011 | $34.95    | 132       | 14           |     |
++---------------------+------+-----------+-----------+--------------+-----+
+| Lawstone Elementary | 2010 | $29.95    | 161       | 0            |     |
++---------------------+------+-----------+-----------+--------------+-----+
+| Lawstone Elementary | 2011 | $29.95    | 155       | 38           |     |
++---------------------+------+-----------+-----------+--------------+-----+
+| Lawstone Elementary | 2012 | $34.95    | 172       | 144          |     |
++---------------------+------+-----------+-----------+--------------+-----+
+|          ...        |      |           |           |              |     |
++---------------------+------+-----------+-----------+--------------+-----+
 
+|                            |
++----------------------------+
+        Primary Key (PK)
+        (composite key) - composed of two or more values
 
+```
+None of these columns are potentially be a primary key. There is nothing here inherently unique. What we can do is combine them.
 
+If we combine "School" column and "Year" column, they can be represented as a primary key.
 
+One place you will see them is they are used when joining tables together, to create "Many-to-Many" relationships.
 
-
-
-
-
-
+## Creating Relationships
 
 
 
