@@ -324,17 +324,17 @@ We are interested in the relationships between entities only. Methods, inheritan
 ```
 +------------+            +------------+            +------------+
 | Customer   |            | Order      |            | Paycheck   |
-+------------+            +------------+            +------------+
++----+-------+            +------------+            +----+-------+
      | places                                            | for
-+------------+                                      +------------+           
++----+-------+                                      +----+-------+           
 | Order      |                                      | Employee   |
-+------------+            +------------+            +------------+
++----+-------+            +------------+            +----+-------+
      | contains           | Blog Post  |                 | is in
-+------------+            +------------+            +------------+
++----+-------+            +------------+            +----+-------+
 | Order Item |                                      | Department |
-+------------+                                      +------------+
++----+-------+                                      +------------+
      | refers to
-+------------+            +------------+
++----+-------+            +------------+
 | Product    |            | Students   |
 +------------+            +------------+
 ```
@@ -450,6 +450,398 @@ If we combine "School" column and "Year" column, they can be represented as a pr
 One place you will see them is they are used when joining tables together, to create "Many-to-Many" relationships.
 
 ## Creating Relationships
+
+You are organizing data into individual tables. Many of these tables need to know about each other.
+
+ER diagram shows some kind of relationship exists between your entities, but to actually build this in a database, we need to say what these relationships are.
+
+While it is common in an ER diagram to usa a phrase or a verb to describe it like "contains", or "refers to", or "belongs to" that is for your benefit. Database can't describe it that way.
+
+###There are only three kinds of relationships(cardinality) options:
+
+1. One-to-One
+2. One-to-Many
+3. Many-to-Many 
+
+### The Natural Order of DB Design
+
+```
++-----------------+            +-----------------+
+| Customer        |            | Order           |
++-----------------+            +-----------------+
+| CustomerID (PK) |            | OrderId (PK)    |
+| FirstName       |           /| Date            |
+| LastName        +------------+ TotalDue        |
+| Email           |           \| Status          |
+| Phone           |            | Salesperson     |
+| AddressLine1    |            | DiscountCode    |
+| ...             |            | ...             |
++-----------------+            +-----------------+
+
+```
+It is necessary to define the primary key then it becoms possible to define the relationship.
+
+## Defining One-to-Many Relationships
+
+It is the most common relationship.
+
+```
++-----------------+            +-----------------+
+| Customer        |            | Order           |
++-----------------+            +-----------------+
+| CustomerID (PK) |            | OrderId (PK)    |
+| FirstName       |           /| Date            |
+| LastName        +------------+ TotalDue        |
+| Email           |           \| Status          |
+| Phone           |            | Salesperson     |
+| AddressLine1    |            | DiscountCode    |
+| ...             |            | ...             |
++-----------------+            +-----------------+
+```
+
+One customer can have many orders. Meaning that one "Customer" row can have many "Order" rows. But each "Order" row is only for one "Customer".
+
+1. We need to define the primary key for both Customer table and Order table.
+
+2. Next, implementing new One-to-Many relationship, requires a change to whatever table that represents the "Many" side of the relationship. So to relate Customer to Order table, I don't need to change anything about the Customer table. That's the One side.
+
+3. We need to add some extra information to the order table, and it is the key to the Customer table, so "CustomerID" and this again is called a "foreign key" (FK) that represents a column in this order table that is a key to a row in a different table. This will specifically refer to one and only one Customer table. You might find the CustomerID occurs more than once in Order, but it is always pointing to only one row in Customer. And we always make the change to the "Many" side of the relationship because it is the only way to do it. I can add one column with one value to every order row that will always point to a correct customer.
+
+The column name of the foreign key does not have to be same as the name of the primary key in the other table. In our case of the example, the name of foreign key can be "PlacedBy" instead of using the same "CustomerID" as its name. However, the data type should match.
+
+### Multiple Relationships
+
+It is also very common to have one table to takes part in multiple relationships. A customer can have many orders. We get a "One-to-Many" relationship here. But we may decide that our customers can have multiple different addresses they may ship to. So we might add a new table for Address and have another "One-to-Many" relationship between Customer and Address. This is perfectly acceptable and very common.
+
+```
++-----------------+           /+-----------------+
+| Customer        +------------+ Order           |
++--------+--------+           \+-----------------+
+         |
+        /|\
++--------+--------+
+| Address         |
++-----------------+
+```
+### Many Side of a Relationship can be One Side in Another rRlationship
+
+Another option is that a table that is on the "Many" side of "One-to-Many" relationship could be on the "One" side of another. For example, Order might be the "Many" side of the Customer-to-Order relationship, but Order itself could have many Order-items so, it is going to be the "One" in this relationship. One Customer has many Orders, One Order can have many Order-items.
+
+There is no standard for diagram, but it is generally like this:
+
+* A box for each table with the name of the table at the top
+* The column names (optionally with data types)
+* Indication of PK and FK next to the column
+* The relationship connector lines between tables
+
+```
++-----------------+            +-----------------+
+| Customer        |            | Order           |
++-----------------+            +-----------------+
+| CustomerID (PK) |            | OrderId (PK)    |
+| FirstName       |           /| Date            |
+| LastName        +------------+ TotalDue        |
+| Email           |           \| Status          |
+| Phone           |            | CustomerID (FK) |
+| AddressLine1    |            | DiscountCode    |
+| ...             |            | ...             |
++-----------------+            +-----------------+
+```
+
+## Exploring One-to-One Relationships
+
+It is possible to create a "One-to-One" relationships in your database, but it is unusual. 
+
+Let's say we have employee and driver's license. If we make two separate entities, we are not counting the case when an employee actually possesses multiple driver's licenses in multiple states or countries. Even if we are only considering emolopyee's primary license, so although we have two physical entities, in some cases, it makes more sense to just combine two tables together.
+
+However, there is a case when you think it is a "One-to-One" relationship is not actually so.
+
+Take a look at this example:
+
+```
+       OrderID +-----------------+
+          Date | Order           |
+     Total Due |                 |
+           ... |                 |
+               +--------+--------+
+                        |
+                        |
+                        |
+                        |
+                       /|\
+  OrderID (FK) +--------+--------+                 +-----------------+ ProductID                
+      Quantity | OrderItem       |\                | Product         | Description
+ProductID (FK) |                 +-----------------+                 | ListPrice
+           ... |                 |/  many-to-one   |                 | ...
+               +-----------------+                 +-----------------+
+```
+* An Order has many OderItems
+* Some people may think OrderItem and Product is a "One-to-One" relationship
+* But actually, many OrderItems have one Product, whici is "Many-to-One" relationship
+
+Make sure you are looking at your relationships in both ways, particularly when you think you have found a One-to-One.
+
+## Defining Many-to-Many Relationships
+
+Consider we have Class and Student as our entities.
+
+* A Class can be attended by multiple Students
+* A Student can attend multiple Classes
+
+This is a Many-to-Many relationship and we cannot add one column either table that would successfully represent all the possible combinations.
+
+In a relational database, you cannot represent a Many-to-Many relationship directly. You need to create a new table to link the two. In the several names for this kind of table; A join table, or a junction table, a linking table, a bridging table, a cross-reference table. It doesn't matter whatever you prefer. By convention, the name with this table is just usually made up by taking the names of the two tables that it's cross referencing and putting them together. So in this case "ClassStudent" or "StudentClass" either would work.
+
+There is a one-to-many relationship from Class to the ClassStudent linking table, and another one-to-many relationship from the Student table to the ClassStudent table. But the ClassStudent has only foreign keys to each tables.
+
+This case is where we could make our primary key for the ClassStudent table as composite key. ClassID is not unique, and StudentID is not unique, but combining two together will be unique.
+
+A One-to-Many relationship can sometimes found to be a Many-to-Many relationship later. An example is Department and Employee relationship. Usually, an employee works for a department. But it could happen that an employee has multiple duties under multiple departments. If this is a case and you need to reflect this relationship to the system, the relationship between Department and Employee needs to be changed to Many-to-Many.
+
+## Referential Integrity and Relationship Rules
+
+###Referential Constraint
+
+A feature in DBMS that restricts you from doing something that violates the relationships between entities. For example, you won't be able to add an order row to assign it to a customer who is not yet available in the Customer table. If I want to add a new order to a new customer, I will need to create a new customer first. It would allow a customer without an order, but it wouldn't allow an order for a non-existent customer.
+
+### Referential Integrity
+
+I cannot modify a CustomerID of an existing Order for a non-existing customer. If I have a customerID of 367 and this customer have two orders and if I delete this customer 367, DBMS will do different things based on your settings and rules.
+
+### Cascading Delete
+
+One option you have when deleting between tables that have relationships is called a cascading delete. With this option, if I delete a customer with CustomerID 367, it will automatically delete any associated orders. One delete could theoretically delete many connected rows in other tables.
+
+### Cascading Nullify (rarely used)
+
+In this option, if I delete a customer, it will look for the foreign keys in the related table, and set the value of the foreign key to null. What we are doing here is removing the relationship but keeping the related rows alive.
+
+### No Action (default in most DBMS)
+
+If you have a related tables and if you attempt to delete one row that is linked with a row in another table, it will refuse and not let you do that. Just as when I add I had to add a customer first then order, if I want to delete, I will have to delete the order first then delete a customer.
+
+## Database Normalization
+
+```
+first normal form -> second normal form -> third normal form
+      (1NF)                 (2NF)                (3NF)
+
+
+```
+
+The entire point of normalization is to make your database easier and more reliable to work with. You usually will end up creating a few new tables as part of the proccess. But the end result is your database will contain a minimum of duplicate or redundant data. It will contain data that's easy to get to, easier to edit, maintain, and you can perform operations even difficult ones on you database without creating garbage in it, without invalidating the state of it, and it is something we will do as part of our initial design, and it is something that we would reapply when a database design is revisited.
+
+Normalization is not an ivory tower, theoretical, academic thing that people talk about but nobody really does in the real world. Everybody does this. If you are a working database administrator, or database designer, you can do normalization in your sleep. It is a core competence of the job. It is important and as you will see we have already been doing a little of it.
+
+## Applying First Normal Form (1NF)
+
+Before we apply the first normal form (1NF), we are assuming that we already have set our columns and primary keys. The first First normal form says that each of our columns and each of our tables should contain one value, and there should be no repeating groups.
+
+### One value for each column and row
+
+```
++------------+-----------+----------+------------+-----+--------------------------------+
+| EmployeeID | FirstName | LastName | Email      | ... | ComputerSerial                 |
++------------+-----------+----------+------------+-----+--------------------------------+
+| 551        | Les       | Adams    | ladams@    | ... | XP5435512 , XA5543231          |
++------------+-----------+----------+------------+-----+--------------------------------+
+| 552        | Jill      | Baker    | jbaker@    | ... | WA2324451                      |
++------------+-----------+----------+------------+-----+--------------------------------+
+| 553        | Stephen   | Jackson  | s.jackson@ | ... | BC32345412 , ZZ87656 , XX21312 |
++------------+-----------+----------+------------+-----+--------------------------------+
+                                                                 violates 1NF
+```
+
+Each column in each row should have one and only one value. Having more than one value means it becomes harder to get, sort, mangage the data.
+
+### No repeating group
+
+```
++------------+-----------+----------+------------+-----+----------------+-----------------+-----------------+
+| EmployeeID | FirstName | LastName | Email      | ... | ComputerSerial | ComputerSerial2 | ComputerSerial3 |
++------------+-----------+----------+------------+-----+----------------+-----------------+-----------------+
+| 551        | Les       | Adams    | ladams@    | ... | XP5435512      | XA5543231       |                 |
++------------+-----------+----------+------------+-----+----------------+-----------------+-----------------+
+| 552        | Jill      | Baker    | jbaker@    | ... | WA2324451      |                 |                 |
++------------+-----------+----------+------------+-----+----------------+-----------------+-----------------+
+| 553        | Stephen   | Jackson  | s.jackson@ | ... | BC32345412     | ZZ87656         | XX21312         |
++------------+-----------+----------+------------+-----+----------------+-----------------+-----------------+
+                                                                           violates 1NF
+```
+
+There should be no repeating groups. The classic sign of repeating group column is the column of the same name is and a number tagged on the end of it just to make it unique. This is a sign of inflexible design.
+
+### Solution
+
+```
+                      Employee
++------------+-----------+----------+------------+-----+
+| EmployeeID | FirstName | LastName | Email      | ... |
++------------+-----------+----------+------------+-----+
+| 551        | Les       | Adams    | ladams@    | ... |
++------------+-----------+----------+------------+-----+
+| 552        | Jill      | Baker    | jbaker@    | ... |
++------------+-----------+----------+------------+-----+
+| 553        | Stephen   | Jackson  | s.jackson@ | ... |
++------------+-----------+-----+----+------------+-----+
+                               |
+                               |
+                              /|\  Computer
+            +------------+-----+------+-----------------+-----+
+            | Serial     | EmployeeID | Description     | ... |
+            +------------+------------+-----------------+-----+
+            | XP5435512  | 551        | Dell Laptop     | ... |
+            +------------+------------+-----------------+-----+
+            | XA5543231  | 551        | Apple MacBook   | ... | 
+            +------------+------------+-----------------+-----+
+            | WA2324451  | 552        | Acer Desktop    | ... |
+            +------------+------------+-----------------+-----+
+            | BC32345412 | 553        | MacBook Pro     | ... |
+            +------------+------------+-----------------+-----+
+            | ZZ87656    | 553        | HP Server       | ... |
+            +------------+------------+-----------------+-----+
+            | XX21321    | 553        | iPad3           | ... |
+            +------------+------------+-----------------+-----+
+                              (FK)
+```
+
+Separate the table by creating a computer table will create a one-to-many relationship between Employee table and Computer table. This effectively solves the problem.
+
+There is no repeating values, and no repeating groups in either table. This would get us into first normal form. Solution to 1NF is to create a new table, and sometimes it requires one-to-many or other times many-to-many requiring a joining table.
+
+## Applying Second Normal Form (2NF)
+
+First you have to be in First Normal Form (1NF). You don't pick and choose between them, you go through this one, two, and three.
+
+Second normal form and third normal form are all about the relationship between your columns that are your keys and your other columns are not your keys.
+
+From description, Second normal form:
+"Any non-key field should be dependent on the entire primary key."
+
+The second normal form is only ever a problem when we are using a composite primary key. That is a primary key made of two or more columns.
+
+```                    Events
++-----------------------+------+----------+-----------+-----+
+| Course     | Date     | Room | Capacity | Available | ... |
++-----------------------+------+----------+-----------+-----+
+| SQL101     | 3/1/2013 | 4A   | 12       | 4         |     |
++-----------------------+------+----------+-----------+-----+
+| DB202      | 3/1/2013 | 7B   | 14       | 7         |     |
++-----------------------+------+----------+-----------+-----+
+| SQL101     | 4/1/2013 | 7B   | 14       | 10        |     |
++-----------------------+------+----------+-----------+-----+
+| SQL101     | 5/1/2013 | 12A  | 8        | 8         |     |
++-----------------------+------+----------+-----------+-----+
+| CS200      | 4/1/2012 | 4A   | 12       | 11        |     |
++-----+-----------------+------+----------+-----------+-----+
+      |
+      |
+     /|\      Course
++-----+-------------------------+-----+
+| CourseID   | Title            | ... |
++-------------------------------+-----+
+| SQL101     | SQL Fundamentals |     |
++-------------------------------+-----+
+| DB202      | Database Design  |     |
++-------------------------------+-----+
+| CS200      | C Programming    |     |
++-------------------------------+-----+
+```
+
+If we had a composite key from Event table that is made of two columns: "Course" and "Title", it would violate 2NF, because either course name or title are exposed to the risk of being changed. Since title is not related in any way with the date, it should be separated out to a new table like the above example.
+
+Moving that event table means that everything in that table is now based on the entire key. Particular course at a particular date which may have a different room, or different capacity, different number of available seats.
+
+Here is the great thing. If you are not using composite keys, second normal form is not even a concern. You can step ahead and go right through second normal form and into the next one. Third normal form.
+
+## Applying Third Normal Form (3NF)
+
+Third normal form:
+"No non-key field is dependent on any other non-key field."
+
+It is in a way similar to second normal form. Second normal form asks, "Can I figure out any of the values in this row from just part of the composite key." Third normal form asks "Can I figure any of the values in this row from any of the other values in this row and I shouldn't be able to do that."
+
+ ```                    Events
++-----------------------+-----------------------+-----------+-----+
+| Course     | Date     | Room                  | Available | ... |
++-----------------------+-----------------------+-----------+-----+
+| SQL101     | 3/1/2013 |       4A              | 4         |     |
++-----------------------+-----------------------+-----------+-----+
+| DB202      | 3/1/2013 |       7B              | 7         |     |
++-----------------------+-----------------------+-----------+-----+
+| SQL101     | 4/1/2013 |       7B              | 10        |     |
++-----------------------+-----------------------+-----------+-----+
+| SQL101     | 5/1/2013 |       12A             | 8         |     |
++-----------------------+-----------------------+-----------+-----+
+| CS200      | 4/1/2012 |       4A              | 11        |     |
++-----+-----------------+--------------------+--+-----------+-----+
+      |                                      |
+      |                                      |
+     /|\      Course                        /|\  Room
++-----+-------------------------+-----+   +--+---+----------+
+| CourseID   | Title            | ... |   | Room | Capacity |
++-------------------------------+-----+   +------+----------+
+| SQL101     | SQL Fundamentals |     |   | 4A   | 12       |
++-------------------------------+-----+   +------+----------+
+| DB202      | Database Design  |     |   | 7A   | 14       |
++-------------------------------+-----+   +------+----------+
+| CS200      | C Programming    |     |   | 12A  | 8        |
++-------------------------------+-----+   +------+----------+
+```
+If we always have same a capacity for the same room, we are repeating data. This is violating the 3NF. We can solve this problem similarly to how we solved the problem with 2NF. We would create a new table and put the repeated column in this new table. This will create another one-to-many relationship between Events and Room.
+
+It is all about the redundancy of the information. This is what we are trying to do with normalization.
+
+## Database Denormalization
+
+We should always take our database design through:
+
+```
+first normal form -> second normal form -> third normal form
+      (1NF)                 (2NF)                (3NF)
+
+
+```
+
+In practice, we would break our rules. It is called denormalization decision. You are consciously making the choice something could be normalized in another table. You could follow the official rules but for convenience and/or for performance, you are not going to.
+
+```
+first normal form     ->     second normal form      ->      third normal form
+      (1NF)                         (2NF)                          (3NF)
+no repeating values,     no non-key values based on      no mnon-key values based on
+no repeating groups      just part of a composite key    other non-key values
+
+```
+
+Taking these three steps will vastly improve the quality of your data.
+
+## Creating Queries in SQL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
