@@ -817,32 +817,667 @@ Taking these three steps will vastly improve the quality of your data.
 
 ## Creating Queries in SQL
 
+### SQL keywords
+
+* SELECT - Question (Query)
+* FROM
+* WHERE
+* ORDER BY
+* GROUP BY
+* JOIN
+* INSERT INTO
+* UPDATE
+* DELETE
+* HAVING
+* IN
+
+### Usage
+
+```
+SELECT columns
+FROM table
+
+SELECT FirstName
+FROM Employee;
+
+SELECT FirstName,LastName
+FROM Employee;
+
+SELECT *                  // means all
+FROM Employee;
+WHERE LastName = 'Green'; //condition
+
+WHERE EmployeeID = 474;
+
+WHERE Salary > 50000;
+```
+
+SQL is not case-sensitive generally speaking. SELECT can be written as select. But by long convention over many years, most developers will write the SQL keywords all upper case. It makes the statement easier to read. Your table names and column names on the other hand should just match however they were named in the database. Many DBMS will not care about case-sensitivity. Line breaks also don't matter. SQL is not sensitive to white space.
+
+```
+SELECT *
+FROM HumanResources.Employee // databaseName.tableName
+WHERE Salary > 50000;
+```
+
+## Creating the WHERE Clause
+
+Writing an WHERE clause is similar to writing an if-statement in other programming languages.
+
+```
+SELECT *
+FROM Employee
+WHERE LastName = 'Green'; // true or false
+
+String values in SQL uses a single quote ('')
+
+>
+<
+>=
+<=
+<> // not equal
+
+SELECT *
+FROM Employee
+WHERE Salary > 50000
+      AND Department = 'Sales';
+
+SELECT *
+FROM Employee
+WHERE Department = 'Marketing'
+      OR Department = 'Sales';
+
+SELECT *
+FROM Employee
+WHERE Department IN
+      ('Marketing','Sales');
+
+SELECT *
+FROM Employee
+WHERE LastName LIKE 'Green%'; // % is the wildcard in SQL
+
+SELECT *
+FROM Employee
+WHERE LastName LIKE 'Sm_th'; // _ is the one character wildcard in SQL
+
+SELECT *
+FROM Employee
+WHERE MiddleInitial IS NULL; // better than using '='
+
+SELECT *
+FROM Employee
+WHERE MiddleInitial IS NOT NULL;
+```
+
+## Sorting Your Results
+
+```
+SELECT Description,
+        ListPrice, Color
+FROM Product;
+
+// Most expensive first, cheapest last
+
+SELECT Description,
+        ListPrice, Color
+FROM Product
+ORDER BY ListPrice // default ascending order
+
+SELECT Description,
+        ListPrice, Color
+FROM Product
+ORDER BY ListPrice DESC; // set it to descending order
+
+SELECT *
+FROM Employee
+WHERE Salary > 50000
+ORDER BY LastName, FirstName; // Sort by LastName first, then FirstName
+```
+## Using Aggregate Functions
+
+It means it does some calculation on data and give a single value.
+
+```
+SELECT COUNT (*) // Count rows
+FROM Employee
+
++--------+
+| result |
++--------+
+| 547    |
++--------+
+
+SELECT COUNT (*) // Count with a condition
+FROM Employee
+WHERE Salary > 50000
+
++--------+
+| result |
++--------+
+| 132    |
++--------+
+
+SELECT *
+FROM Product
+ORDER BY ListPrice DESC;
+
+SELECT MAX(ListPrice) // Finding the max value
+FROM Product;
+
++--------+
+| result |
++--------+
+| 699.00 |
++--------+
+
+SELECT MIN(ListPrice) // Gives the minimum value
+FROM Product;
+
+SELECT AVG(ListPrice) // Gives the average value
+FROM Product;
+
+SELECT SUM(TotalDue) // Gives a total sum value
+FROM Order
+WHERE CustomerID = 854;
+
++---------+
+| result  |
++---------+
+| 2742.75 |
++---------+
+
+SELECT COUNT(*) // Get the number of rows
+FROM Product
+WHERE Color = 'Red';
+
+SELECT COUNT(*) , Color // Will give all the counts for each color
+FROM Product
+GROUP BY Color // You would only use GROUP BY with Aggregate Functions
+
++--------+--------+
+| result | Color  |
++--------+--------+
+| 47     | Black  |
++--------+--------+
+| 32     | Silver |
++--------+--------+
+| 8      | White  |
++--------+--------+
+| 86     | Clear  |
++--------+--------+
+| ...    | ...    |
++--------+--------+
+```
+
+## Joining Tables
+
+```
+SELECT FirstName, LastName, HireDate, // All these columns are from Employee
+   Employee.DepartmentID, Name, Location // Name and Location columns are from Department
+FROM Employee JOIN Department // JOIN keyword joins two tables together for the query
+ON Employee.DepartmentID = Department.DepartmentID
+```
+Since DepartmentID column name is shared for both tables, we can set it explicitly by writing it as `Employee.DepartmentID` instead of just `DepartmentID`
+
+If there is no match, that row will not be returned in the result table.
+
+```
+SELECT FirstName, LastName, HireDate,
+    Employee.DepartmentID, Name, Location
+FROM Employee LEFT OUTER JOIN Department
+ON Employee.DepartmentID = Department.DepartmentID // include all rows in the left table
+
+SELECT FirstName, LastName, HireDate,
+    Employee.DepartmentID, Name, Location
+FROM Employee RIGHT OUTER JOIN Department
+ON Employee.DepartmentID = Department.DepartmentID // include all rows in the right table
+```
+
+## Inserting, Updating and Deleting
+
+We have several different keywords in SQL for inserting, updating and deleting information. How this goes back to the idea that any computer system not just databases that deals with storing data needs to provide four fundamental functions. The ability to create, read, update, and delete.
+
+```
+Function   In SQL
+-----------------
+Create     INSERT
+Read       SELECT
+Update     UPDATE
+Delete     DELETE
+
+INSERT INTO table
+    (column1, column2...)
+    VALUES (value1, value2...)
 
 
+INSERT INTO Employee
+    (FirstName, LastName, Department, Salary)
+    VALUES (value1, value2...)
 
 
+INSERT INTO Employee
+    (FirstName, LastName, Department, Salary) // columns and
+    VALUES ('Joe', 'Allen', 'Sales', '45000') // values and their types should match
+
+```
+
+We don't have to write manual INSERT statements for every new row in our database. It is much more likely that this process will be done programmatically that people will be using more pleasant user interface to enter data. But this is the kind of INSERT statement that is going on behind the scenes.
+
+```
+UPDATE table
+SET column = value
+WHERE condition
+
+UPDATE Employee
+SET Email = 'joea@twothreesoliveoil.com'
+WHERE EmployeeID = 734
+
+```
+
+Delete is the simplest because it all about the WHERE. We don't have to name any column because DELETE just works on rows.
+
+```
+DELETE FROM table
+WHERE condition
+
+DELETE FROM Employee
+WHERE EmployeeID = 734
+```
+
+A good practice when working with the DELETE and also when working with UPDATE is to create it first as a SELECT statement so in this case, so in this case:
+
+```
+SELECT *
+FROM Employee
+WHERE EmployeeID = 734
+```
+
+And just confirm that the result I would expect back in this case one row, that is what we'd also affect if I was doing an UPDATE and that is what affect if I was doing a DELETE.
+
+```
+SELECT *
+FROM Employee
+WHERE EmployeeID = 734
+
+DELETE
+FROM Employee
+WHERE EmployeeID = 734
+```
+
+Will ensure that you are doing it correctly.
+
+## Using Data Definition Language
+
+### SQL statement types
+
+```
+
+   data manipulation                 data definition                   data control
++---------------------+          +---------------------+          +---------------------+
+|       SELECT        |          |        CREATE       |          |        GRANT        |
+|       INSERT        |          |        ALTER        |          |        REVOKE       |
+|       UPDATE        |          |        DROP         |          |                     |
+|       DELETE        |          |                     |          |                     |
++---------------------+          +---------------------+          +---------------------+
+most of the time developers       less time                        even lesser time
+would spend time on
+```
+
+### Usage
+
+```
+CREATE table
+(column definition)
+
+CREATE Employee
+(EmployeeID    INTEGER    PRIMARY KEY,
+ FirstName     VARCHAR(35) NOT NULL,
+ LastName      VARCHAR(100) NOT NULL,
+ Department    VARCHAR(30) NULL,
+ Salary        INTEGER
+);
 
 
+ALTER TABLE table
+
+ALTER TABLE Employee
+ADD Email VARCHAR(100);
 
 
+DROP TABLE table
+
+DROP TABLE Employee;
+```
+
+## Creating Indexes
+
+Index in a database is like an index at the back of the textbook. It will help you find things in that book. Say if I have 500 page book on database management and I want to find the content dealing just with date columns. I can look in the back in the index for date. It tells me that is on page 124, and I turn directly to that page. Indexes are all about speed and access. I could have found that content by going through the book page by page, so index isn't adding any content, it is just helping me find it.
+
+```
++------------+-----------+-----------+-----+              +-------------+------------+
+| CustomerID | FirstName | LastName  | ... |              | LastName    | CustomerID |
++------------+-----------+-----------+-----+              +-------------+------------+
+| 551        | Angela    | Smith     | ... |              | Allen       | 592        |
++------------+-----------+-----------+-----+              +-------------+------------+
+| 561        | Lee       | Stout     | ... |              | Bailey      | 432        |
++------------+-----------+-----------+-----+              +-------------+------------+
+| 584        | Michelle  | Blackwell | ... |              | Blackwell   | 584        |
++------------+-----------+-----------+-----+              +-------------+------------+
+| 592        | Lynn      | Allen     | ... |              | Burns       | 122        |
++------------+-----------+-----------+-----+              +-------------+------------+
+| ...        | ...       | ...       | ... |              | ...         | ...        |
++------------+-----------+-----------+-----+              +-------------+------------+
+clustered index                                           | ...         | ...        |
+                                                          +-------------+------------+
+                                                     ---->| Smith       | 551        |
+                                                          +-------------+------------+
+                                                          | ...         | ...        |
+                                                          +-------------+------------+
+                                                          non-clustered index on LastName
 
 
+SELECT * FROM Customer WHERE LastName = 'Smith';
+```
+
+We cannot make non-clustered index on every columns becasue every index has a cost. Indexes are benefit when reading data but they are deteriment when writing or changing because they must be maintained.
+
+Say we have a clustered index on EmployeeID, and a non-clustered index on LastName and a non-clustered index on FirstName. If we insert a new row, we would need to insert three times for three different tables.
+
+You only put them on the columns that you really need and use all the time. It is far better to do an occasional tables scan than have multiple indexes that you don't really use.
+
+### Indexing
+
+* Indexing is not just "up-front" work
+* Indexing is a trade-off - faster reads, slower writes
+* But it can be tweaked without breaking applications
+
+## Conflicts and Isolation
+
+* Atomic
+* Consistent
+* Isolated
+* Durable
+
+```
++--------+----------+---------+-----+
+| ID     | Nickname | Balance | ... |
++--------+----------+---------+-----+
+| 1      | Joint    | $10000  |     |
++--------+----------+---------+-----+
+| 2      | Alice    | $50     |     |
++--------+----------+---------+-----+
+| 3      | Bob      | $45     |     |
++--------+----------+---------+-----+
+| ...    | ...      | ...     |     |
++--------+----------+---------+-----+
+
+get balance of Joint account ($10000)
+get balance of Alice account ($50)
+update balance of Joint account ($10000) - $1000
+update balance of Alice account ($50) + $1000
+```
+
+### Race Condition
+
+It is a conflict where two people or two programming threads doing very similar steps in just getting a little bit ahead of each other. They are trying to affect the same data. When they are doing it together, you will end up with a very different outcome to what would have happened if they are done exactly same steps but Alice did hers first and Bob did his.
+
+```
++--------+----------+---------+-----+
+| ID     | Nickname | Balance | ... |
++--------+----------+---------+-----+
+| 1      | Joint    | $9000   |     |
++--------+----------+---------+-----+
+| 2      | Alice    | $1050   |     |
++--------+----------+---------+-----+
+| 3      | Bob      | $1045   |     |
++--------+----------+---------+-----+
+| ...    | ...      | ...     |     |
++--------+----------+---------+-----+
+
+get balance of Joint account ($10000)                get balance of Joint account ($10000)
+get balance of Alice account ($50)                   get balance of Bob account   ($45)
+update balance of Joint account ($10000 - $1000)     update balance of Joint account ($10000 - $1000)
+update balance of Alice account ($50 + $1000)        update balance of Bob account ($50 + $1000)
+```
+
+### Atomic
+
+The first step to fixing this situation is we make these steps atomic. We are making these several actions group into one indivisible unit by making them transactions. And we do this by adding SQL keywords: at the start and end.
+
+```
+BEGIN TRANSACTION                                      BEGIN TRANSACTION
+  get balance of Joint account ($10000)                  get balance of Joint account ($10000)
+  get balance of Alice account ($50)                     get balance of Bob account   ($45)
+  update balance of Joint account ($10000 - $1000)       update balance of Joint account ($10000 - $1000)
+  update balance of Alice account ($50 + $1000)          update balance of Bob account ($50 + $1000)
+COMMIT                                                 COMMIT
+```
+
+### Dirty Read
+
+The issue is that Bob is being allowed to read from the same table that Alice is in the process of changing, but she hasn't finished changing it yet. This is often what is referred to as a dirty read.
+
+There is a transaction going on that is part way through it is going to be changing this data but we are allowed to read from somewhere in the middle of that transaction. So often what happens is we don't want to just treat all as one unit just making them transaction is not good enough. We also want some kind of a locking to occur that we are prevented from simultaneously changing the same data, at least until the transaction is over.
+
+### Pessemistic Locking
+
+One way of doing this is what is referred to as **Pessimistic locking**. As soon as a transaction starts we are going to lock the data that is referring to, and only unlock it once the transaction commits. However, we need to be careful because not all transactions update.
+
+### Optimistic locking
+
+In this case, Bob would be allowed to read from the table on the transaction is going on because we are optimistic that there won't be a conflict.
+
+```
+               Alice                                                  Bob
+
+BEGIN TRANSACTION                                      BEGIN TRANSACTION
+  get balance of Joint account ($10000)                  get balance of Joint account ($10000)
+  get balance of Alice account ($50)                     get balance of Bob account   ($45)
+  update balance of Joint account ($10000 - $1000)       update balance of Joint account ($10000 - $1000)
+  update balance of Alice account ($50 + $1000)          error - dirty read detected - rollback
+COMMIT
+```
+
+## Stored Procedures
+
+It is like creating a function or a method in the other programming languages, and it can be executed multiple times.
+
+So here is the most basic way. We have some SQL we have written and we want to reuse.
+
+```
+SELECT * FROM Employee
+WHERE Salary > 50000
+ORDER BY LastName, FirstName
+
+CREATE PROCEDURE HighlyPaid()
+    SELECT * FROM Employee
+    WHERE Salary > 50000
+    ORDER BY LastName, FirstName
+END;
+
+CALL HighlyPaid();
+```
+
+You could call it from within database administration application, you could call it from an application you were writing yourself in some other programming language, more from reporting application. Now it is another area where the actual creation of a stored procedure is a little different accross the database management systems although there are core similarities.
+
+### Stored procedures can have parameters
+
+```
+SELECT * FROM Employee
+WHERE Department = 'Sales'
+ORDER BY LastName, FirstName
+
+CREATE PROCEDURE EmployeesInDept(IN dept VARCHAR(50))
+    SELECT * FROM Employee
+    WHERE Department = 'Sales'
+    ORDER BY LastName, FirstName
+END;
+
+CALL EmployeesInDept('Accounting');
+```
+
+### SQL Injection
+
+```
+                 +-------------------------------+ +--------+
+Customer Number: | ABC551                        | | Submit |
+                 +-------------------------------+ +--------+
+
+sqlString = "SELECT * FROM Orders WHERE CustomerID = '"
+            + textbook.value
+            + "'";
+
+sqlString = "SELECT * FROM Orders WHERE CustomerID = 'ABC551';"
+executeSQL(sqlString);
 
 
+```
 
+What happens when the user who sees this page as malicious and they enter something like this
 
+```
+                 +-------------------------------+ +--------+
+Customer Number: | x'; SELECT * FROM Users; --   | | Submit |
+                 +-------------------------------+ +--------+
 
+sqlString = "SELECT * FROM Orders WHERE CustomerID = 'x'; SELECT * FROM Users; --'"
+executeSQL(sqlString);
 
+// What the above query actually do
+SELECT * FROM Orders WHERE CustomerID = 'x';  // won't return any value
+SELECT * FROM Users;                          // what we just injected into the system
+--''                                          // counted as a comment
+```
 
+What someone can do with their malicious is they can wonder whether your website is liable or responsive to SQL injection attacks. If it is that usually means that this is going to be constructed in some kind of concatenated string.
 
+```
+                 +-------------------------------+ +--------+
+Customer Number: | x'; DROP TABLE Orders; --     | | Submit |
+                 +-------------------------------+ +--------+
 
+sqlString = "SELECT * FROM Orders WHERE CustomerID = 'x'; DROP TABLE Orders; --'"
+executeSQL(sqlString);
 
+// What the above query actually do
+SELECT * FROM Orders WHERE CustomerID = 'x';  // won't return any value
+DROP TABLE Orders;                            // DDL. You've just lost an entire part of your database
+--''                                          // counted as a comment
 
+```
 
+Really malicious here.
 
+Allowing SQL injection can allow someone to log into your system as someone else even administrator without knowing a username or password.
 
+One way around them is to use stored procedures with parameters rather than constructing your own strings as stored procedures inherently don't have this level of flexibility and want to passed into them. You can't dynamically break a stored procedure part into several statements.
 
+## Desktop Database Systems
 
+Some popular desktop softwares:
 
+1. Microsoft Access
+2. FileMaker
+3. Apache OpenOffice Base
+4. FileMaker Bento
 
+```
+            reasons + | reasons -
+       simple install | many users
+          easy to use | large data
+    template starters | website database
+database and UI tools | 
+    reporting options |
+                      |
+                      |
+```
 
+## Relational Database Management Systems
+
+If any database systems can be described as classic, it is these ones that relational database management systems or RDBMS that we have been focusing on this course. They all share the key features discussed.
+
+They are made of:
+
+* Tables with defined columns
+* Multiple rows of data
+* Primary keys and Foreign keys
+* They support relationships, transactions and the ACID test
+* Using SQL to talk to them
+
+## XML and Object-Oriented Database Systems
+
+There are a handful of database management systems oriented specifically around using XML as their internal structure rather than tables and columsn and rows.
+
+### XML database systems
+
+```
+Name  | License     | QueryLanguage
+------+-------------+--------------
+BaseX | Open Source | XQuery
+Sedna | Open Source | XQuery
+eXist | Open Source | XQuery
+
+```
+
+### Object-Oriented Database Systems (OO DBS)
+
+```
+Name
+---------------
+Objectivity/DB
+Versant
+VelocityDB
+
+```
+
+### Object-Relational Mapping (ORM)
+
+```
+ORM Framework | Language
+--------------+-----------------
+Hibernate     | Java
+Core Data     | Objective-C
+ActiveRecord  | Ruby
+NHibernate    | C# / VB.NET
+
+```
+
+## NoSQL Database Systems
+
+NoSQL "Not only SQL"
+
+You can't assume that they are all similar to each other. Unlike relational databases as a category, where the skills are broadly transferrable between, say Oracle and SQL Server, or DB2, or MySQL. In the NoSQL category, just because you know MongoDB doesn't mean you know Neo4J. They are very different each other.
+
+There are no rules as to what makes a NoSQL database systems and that is kind of a point, because it is more about what they aren't. They are not traditional relational databases. They are getting away from those rules.
+
+### Features of NoSQL databases may include:
+
+* not using SQL
+* not being table-based
+* not relationship-oriented
+* not ACID
+* no formal schema
+* oriented to web development
+* oriented to large-scale deployment
+* often open source
+
+### Document Stores
+
+* documents, not rows and columns
+* examples: CouchDB, MongoDB
+
+### Key-Value Stores
+
+* everything stored as a key-value pair
+* examples: MemcacheDB, Riak, Project Voldemort
+
+### Graph Database
+
+* everything stored as small connected nodes, with relations
+* examples: Neo4J, AllegroGraph, DB2 NoSQL Graph Store
+
+### Reasons to Choose a NoSQL Database
+
+* Do you need a flexible schema?
+* Do you have vast amounts of data?
+* Do you value scaling over consistency?
