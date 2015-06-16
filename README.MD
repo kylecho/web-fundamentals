@@ -9,6 +9,9 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * jQuery
 * [Browser Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/BOM)
 * [Document Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/DOM)
+* Eloquent JavaScript Ch.12: JavaScript and the Browser
+* Eloquent JavaScript Ch.13: The Document Object Model
+* Eloquent JavaScript Ch.14: Handling Events
 * [Object-Oriented JavaScript](https://www.udacity.com/course/object-oriented-javascript--ud015)
 * [HTTP and REST](https://github.com/kylecho/hackreactor-prep/tree/master/httprest)
 * [Foundations of Programming: Databases](https://github.com/kylecho/hackreactor-prep/tree/master/database)
