@@ -189,13 +189,16 @@ Balance accounts                        Merge organizations
 
 * **Extensions**: One or more items out of stock.
 
+```
 (a) Customer removes out-of-stock item and continues.
 (b) Customer cancels entire order.
 ...
-
+```
 * **Extensions**: Customer payment method rejected.
 
+```
 (a) ...
+```
 
 ### ACTIVE VOICE. OMIT NEEDLESS WORDS.
 
@@ -276,6 +279,7 @@ Administrator
 
 ### Examples
 
+```
 * As a Bank Customer
 * I want to change my PIN online
 * so that I don't have to go into a branch
@@ -295,6 +299,7 @@ Administrator
 * As a User
 * I want to be prompted to save
 * so that I don't lost any work
+```
 
 ### USER STORIES AND USE CASE
 
@@ -311,6 +316,163 @@ Administrator
 ```
 
 ## Creating a Conceptual Model
+
+### IDENTIFYING OBJECTS
+
+* Use Case Scenario: Customer confirms items in shopping cart. Customer provides payment and address to process sale. System validates payment and responds by confirming order, and provides order number that Customer can use to check on order status. system will send Customer a copy of order details by email.
+
+### NOUN LIST
+
+* Customer
+* Item
+* Shopping Cart
+* Payment
+* Address
+* ~Sale~ : Same as Order. Remove.
+* Order
+* ~Order Number~ : Attribute of Order
+* ~Order Status~ : Attribute of Order
+* ~Order Details~ : Attribute of Order
+* Email
+* ~System~
+
+
+### CONCEPTUAL OBJECT MODEL
+
+```
++------------+   uses  +---------------+ contains+------------+
+| Customer   |---------| Shopping Cart |---------| Payment    |
++------------+         +---------------+ 1     * +------------+
+      |   places                                       |
+      +-----------+                         +----------+
+                  |                         |
+                  |    +---------------+    |
++------------+    +----|     Order     +----+    +------------+           
+| Item       |---------|               |         | Email      |
++------------+ paid by +---------------+         +------------+
+                               |
+                  +------------+
+                  |
++------------+    |
+| Address    |----+ 
++------------+
+
+```
+
+### IDENTIFYING RESPONSIBILITIES
+
+* **Use Case Scenario**: Customer verifies items in shopping cart. Customer provides payment add address to process sale. System validates payment and responds by confirming order, and provides order number that Customer can use to check on order status. System will send Customer a copy of order details by email.
+
+```
+Verify items                         Confirm order
+
+Provide payment and address          Provide order number
+
+Process sale                         Check order status
+
+Validate payment                     Send order details email
+
+```
+
+### ASSIGNING RESPONSIBILITIES
+
+```
+
++------------+         +---------------+         +------------+  Verify items (a.)
+| Customer   |---------| Shopping Cart |---------| Payment    |
++------------+         +---------------+         +------------+  Provide payment and address (b. c.)
+      |                 a.Display totals                |
+      +-----------+                         +-----------+        Process sale (d.)
+                  |                         |
+                  |    +---------------+    |                    Validate payment (e.)
++------------+    +----|     Order     |----+    +------------+
+| Item       |---------|               |         | Email      |  Confirm order (f.)
++------------+         +---------------+         +------------+
+b.Set payment details    d.Process order         j.Send email    Provide order number (g.)
+e.Validate payment+------------+
+                  |      f.Confirm order                         Check order status (h.)
++------------+    |      g.Get order number
+| Address    |----+      h.Get status                            Send order details email (i. j.)
++------------+           i.Create order confirmation email
+c.Set address details
+
+```
+
+### WORKING WITH "SYSTEM"
+
+* **Use Case Scenario**: Customer verifies items in shopping cart. Customer provides payment add address to process sale. **System validates payment** and responds by confirming order, and provides order number that Customer can use to check on order status. **System will send Customer a copy of order details by email.**
+
+System means "some part of our system". It is our job to find what part of our system should be responsible for that behaviour.
+
+### AVOID GLOBAL MASTER OBJECTS
+
+```
+
++------------+         +---------------+         +------------+
+| Customer   |---------| Shopping Cart |---------| Item       |
++------------+         +---------------+         +------------+
+      |                                                |
+      +-----------+                         +----------+       
+                  |                         |
+                  |    +---------------+    |                  
++------------+    +----|    System     |----+    +------------+
+| Item       |---------|               |---------| Order      |
++------------+         +---------------+         +------------+
+                               |         
+                  +------------+
+                  |      Generate email         
++------------+    |      Create cart
+| Email      |----+      Get order number           
++------------+           Validate payment
+                         Add item to shopping cart
+                         (etc)
+
+```
+
+### RESPONSIBILITIES SHOULD BE WELL DISTRIBUTED
+
+```
+
++------------+         +---------------+         +------------+
+| Customer   |---------| Shopping Cart |---------| Payment    |
++------------+         +---------------+         +------------+
+      |                  Display totals                 |
+      +-----------+                         +-----------+ 
+                  |                         |
+                  |    +---------------+    |                    
++------------+    +----|     Order     |----+    +------------+
+| Item       |---------|               |         | Email      |  
++------------+         +---------------+         +------------+
+Set payment details      Process order             Send email   
+Validate payment  +------------+
+                  |      Confirm order                         
++------------+    |      Get order number
+| Address    |----+      Get status                            
++------------+           Create order confirmation email
+Set address details
+
+```
+
+## OOP Using CRC Cards
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
