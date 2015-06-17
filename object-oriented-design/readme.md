@@ -328,13 +328,13 @@ Administrator
 * Shopping Cart
 * Payment
 * Address
-* ~Sale~ : Same as Order. Remove.
+* ~~Sale~~ : Same as Order. Remove.
 * Order
-* ~Order Number~ : Attribute of Order
-* ~Order Status~ : Attribute of Order
-* ~Order Details~ : Attribute of Order
+* ~~Order Number~~ : Attribute of Order
+* ~~Order Status~~ : Attribute of Order
+* ~~Order Details~~ : Attribute of Order
 * Email
-* ~System~
+* ~~System~~
 
 
 ### CONCEPTUAL OBJECT MODEL
@@ -573,7 +573,7 @@ public class Spaceship {
 }
 ```
 
-### SIMPLE CLASS IN C\#
+### SIMPLE CLASS IN C#
 
 ```
 public class Spaceship {
