@@ -573,7 +573,7 @@ public class Spaceship {
 }
 ```
 
-### SIMPLE CLASS IN C#
+### SIMPLE CLASS IN C'#'
 
 ```
 public class Spaceship {
@@ -654,4 +654,347 @@ end
 
            interface                          implementation
 
+```
+
+## Exploring Object Lifetime
+
+### INSTANTIATION
+
+```
+          Java    Customer fred = new Customer();
+
+            C#    Customer fred = new Customer();
+
+        VB.NET    Dim fred As New Customer
+
+          Ruby    fred = Customer.new
+
+           C++    Customer *fred = new Customer();
+
+   Objective-C    Customer *fred = [[Customer alloc] init];
+
+```
+
+### CONSTRUCTOR
+
+```
++-----------------------------+
+|          Spaceship          |   Spaceship excelsior = new Spaceship();
++-----------------------------+
+|   name: String              |
+|   shieldStrength: Integer   |            object: excelsior
+|                             |          +-------------------+
+|                             |          | name: null        |
++-----------------------------+          | shieldStrength: 0 |
+|   fire(): String            |          +-------------------+
+|   reduceShields(Integer)    |
+|                             |
+|                             |
++-----------------------------+
+```
+
+### CONSTRUCTOR EXAMPLE
+
+```
+public class Spaceship {
+	                                Spaceship excelsior = new Spaceship();
+	// instance variables
+	public String name;                       object: excelsior
+	private int shieldStrength;            +---------------------+
+                                         | name: Unnamed Ship  |
+	// constructor method                  | shieldStrength: 100 |
+	public Spaceship() {                   +---------------------+
+		  name = "Unnamed ship";
+		  shieldStrength = 100;
+	}
+
+
+
+
+	// other methods omitted
+
+}
+```
+
+### CONSTRUCTORS IN UML
+
+```
++-----------------------------+
+|          Spaceship          |
++-----------------------------+
+|   name: String              |
+|   shieldStrength: Integer   |
+|                             |
+|                             |
++-----------------------------+
+|   Spaceship()               |
+|                             |
+|   fire(): String            |
+|   reduceShields(Integer)    |
++-----------------------------+
+```
+
+### CONSTRUCTOR EXAMPLE 2 (OVERLOADING, WITH PARAM)
+
+```
+public class Spaceship {
+	                                Spaceship excelsior = new Spaceship("Excelsior 2");
+	// instance variables
+	public String name;                       object: excelsior
+	private int shieldStrength;            +---------------------+
+                                         | name: Excelsior 2   |
+	// constructor method                  | shieldStrength: 200 |
+	public Spaceship() {                   +---------------------+
+		  name = "Unnamed ship";
+		  shieldStrength = 100;
+	}
+  // overloaded constructor
+  public Spaceship(String n) {
+      name = n;
+      shieldStrength = 200;
+  }
+	// other methods omitted
+
+}
+```
+
+### MULTIPLE CONSTRUCTORS IN UNL
+
+```
++-----------------------------+
+|          Spaceship          |
++-----------------------------+
+|   name: String              |
+|   shieldStrength: Integer   |
+|                             |
+|                             |
++-----------------------------+
+|   Spaceship()               |
+|   Spaceship(String)         |
+|   fire(): String            |
+|   reduceShields(Integer)    |
++-----------------------------+
+```
+
+### DESTRUCTORS / FINALIZERS
+
+* Called when an object is being deleted / deallocated / released
+* Use for releasing resources
+
+## Using Static or Shared Members
+
+```
++-----------------------------+    +-------------------------------------------------------+
+|       SavingsAccount        |    |                         0.85%                         |
++-----------------------------+    |                                                       |
+|   accountNumber             |    |  +-------------+   +-------------+   +-------------+  |
+|   balance                   |    |  |             |   |             |   |             |  |
+|   interestRate // static    |    |  | A7652       |   | B2311       |   | S2314       |  |
+|                             |    |  | $500        |   | $50000      |   | $7500       |  |
++-----------------------------+    |  |             |   |             |   |             |  |
+|   deposit()                 |    |  |             |   |             |   |             |  |
+|   withdraw()                |    |  |             |   |             |   |             |  |
+|                             |    |  | deposit()   |   | deposit()   |   | deposit()   |  |
+|                             |    |  | withdraw()  |   | withdraw()  |   | withdraw()  |  |
++-----------------------------+    |  +-------------+   +-------------+   +-------------+  |
+                                   |      joeAcct          aliceAcct          samAcct      |
+                                   |                                                       |
+                                   +-------------------------------------------------------+
+
+```
+Here `interestRate` variable is a class level variable. 
+
+
+### CREATING STATIC VARIABLES
+
+```
+public class SavingsAccount {
+	
+	// instance variables                       ' VB.NET - shared variables
+	public String accountNumber;                Public Shared interestRate As Float
+	private Money balance;
+	// static variables                         # Ruby - class level variables
+	public static float interestRate;           @@interestRate
+
+
+
+
+
+
+	// other code omitted
+
+}
+
+```
+
+### USE THE NAME OF THE CLASS TO ACCESS
+
+* `SavingsAccount.interestRate` // 0.85
+
+* `joeAcct.accountNumber` // A7652
+
+* `aliceAcct.accountNumber` // B2311
+
+* `samAcct.accountNumber` // S2314
+
+### CREATING STATIC METHODS
+
+```
+public class SavingsAccount {
+	
+	// instance variables omitted
+
+	// public (accessible) static variable
+	public static float interestRate;
+
+	// public static methods
+	public static setInterestRate(float r) {
+      // add code to log any change
+      interestRate = r;
+	}
+	public static getInterestRate() {
+      return interestRate;
+	}
+
+	// other code omitted
+}
+
+```
+
+Change to private
+
+```
+public class SavingsAccount {                     SavingsAccount.setInterestRate(0.9);
+	
+	// instance variables omitted
+
+	// changed to private
+	private static float interestRate;
+
+	// public static methods
+	public static setInterestRate(float r) {
+      // add code to log any change
+      interestRate = r;
+	}
+	public static getInterestRate() {
+      return interestRate;
+	}
+
+	// other code omitted
+}
+
+```
+
+### SHOWING STATIC MEMBERS IN UML
+
+Class level, static, or shared members are represented using underline in UML.
+
+```
++-----------------------------+
+|       SavingsAccount        |
++-----------------------------+
+|   accountNumber             |
+|   balance                   |
+|   interestRate              |
+|   ------------              |
+|                             |
++-----------------------------+
+|   deposit()                 |
+|   withdraw()                |
+|   getInterestRate()         |
+|   -----------------         |
+|   setInterestRate()         |
+|   -----------------         |
+|                             |
++-----------------------------+  
+```
+
+## Identifying Inheritance Situations
+
+Even if you don't know inheritance, you have used it all the time.
+
+### INHERITANCE DESCRIBES AN "IS A" RELATIONSHIP
+
+* A car **is a** vehicle.
+* A bus **is a** vehicle.
+* ~~A car **is a** bus.~~
+
+* An employee **is a** person.
+* A customer **is a** person.
+* ~~A customer **is a** shopping cart.~~
+
+* A checking account **is a kind of** bank account.
+* A savings account **is a type of** bank account.
+
+* A Bentley Continental GT **is a** car **is a** vehicle.
+
+* A Pomeranian **is a** dog **is a** mammal **is an** animal.
+
+### IDENTIFYING INHERITANCE
+
+Say we have entities of:
+
+* Customer
+* Bank
+* Manager
+* Checking Account
+* Bank Account
+* Savings Account
+* Teller
+
+* Bank Account **is a** bank - No it is not.
+* Checking Account **is a** Bank Account.
+* Savings Account **is a** Bank Account.
+
+"Is A" should identify inheritance.
+
+In UML, inheritance relationship is represented by open arrow that looks like:
+
+```
+Subclass or Child class           Super class or Parent class
++------------------+              +--------------+
+| Checking Account | ----------|> | Bank Account |
++------------------+              +--------------+
+
+```
+
+### EXAMPLE
+
+Say we have Album, Book, and Movie. They all share title, price, purchase(), and download(). Since they share many attributes and behaviours, we can create a Super class named "Product" with shared attributes and behaviours.
+
+* Album can inherit everything but artist attribute.
+* Book can inherit everything but author attribute.
+* Movie can inherit everything but director attribute.
+
+### FRAMEWORK INHERITANCE EXAMPLE FROM JAVA
+
+```
++-------------+
+| Object      |   Super Class / Parent Class
++-------------+
+       ^
+       |
++-------------+
+| Component   |
++-------------+
+       ^
+       |
++-------------+
+| Container   |
++-------------+
+       ^
+       |
++-------------+
+| Window      |
++-------------+
+       ^
+       |
++-------------+
+| Dialog      |
++-------------+
+       ^
+       |
++-------------+
+| FileDialog  |   Sub Class / Child Class
++-------------+
 ```
