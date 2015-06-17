@@ -455,35 +455,203 @@ Set address details
 
 ## OOP Using CRC Cards
 
+### CRC CARDS
 
+Each CRC Card represents one class:
 
+```
++-------------------------------------------+
+| Class name                                |
+| ----------                                |
+|                           |               |
+| Responsibilities          | Collaborators |
+|                           |               |
+| ...                       | ...           |
+|                           |               |
+|                           |               |
+|                           |               |
+|                           |               |
+|                           |               |
++-------------------------------------------+
+```
 
+One advantage of using CRC Cards is that you can freely move the card around to think about their relationships.
 
+```
++-------------------------------------------+
+| Payment                                   |
+| ----------                                |
+|                           |               |
+| Store payment details     | Order         |
+| Validate payment          |               |
+|                           |               |
+|                           |               |
+|                           |               |
+|                           |               |
+|                           |               |
+|                           |               |
++-------------------------------------------+
+```
 
+### CLASS DIAGRAM
 
+```
++----------------------------------+
+|              Product             |
++----------------------------------+
+| - name: String = "New Product"   |  "-" represents that it is invisible
+| - isActive: Boolean              |  "+" represents that it is visible
+| - launchDate: Date               |  ":" represents the type of data
+| - itemNumber: Integer            |
++----------------------------------+
+| + getName(): String              |  ":" represents types that it returns
+| + setActive(Boolean)             |
+| + getProductDetails(): String    |
+| + displayProduct()               |
+| - formatProductDetails(): String |
++----------------------------------+
+```
 
+### AVOID BUILDING PLAIN DATA STRUCTURES
 
+Do not start building classes first. Revisit UML and Use Cases and User Stories if you find your classes lack responsibilities.
 
+```
++-----------------------+         +-----------------------+
+|        Customer       |         |         Order         |
++-----------------------+         +-----------------------+
+| customerID            |         | orderNumber           |
+| customerName          |         | orderDate             |
+| email                 |         | orderAmount           |
+| address               |         | orderStatus           |
+| phone                 |         | orderType             |
+| company               |         | ...                   |
+| firstPurchaseDate     |         |                       |
+| customerContact       |         |                       |
+| ...                   |         |                       |
++-----------------------+         +-----------------------+
+|                       |         |                       |
++-----------------------+         +-----------------------+
+```
 
+### CONVERTING CLASS DIAGRAMS TO CODE
 
+```
++-----------------------------+
+|          Spaceship          |
++-----------------------------+
+| + name: String              |
+| - shieldStrength: Integer   |
+|                             |
+| ...                         |
++-----------------------------+
+| + fire(): String            |
+| + reduceShields(Integer)    |
+|                             |
+| ...                         |
++-----------------------------+
+```
 
+### SIMPLE CLASS IN JAVA
 
+```
+public class Spaceship {
+	
+  // instance variables
+  public String name;
+  private int shieldStrength;
 
+  // methods
+  public String fire() {
+      return "Boom!";
+  }
 
+  public void reduceShields(int amount) {
+      shieldStrength -= amount;
+  }
 
+}
+```
 
+### SIMPLE CLASS IN C\#
 
+```
+public class Spaceship {
+	
+  // instance variables
+  public String name;
+  private int shieldStrength;
 
+  // methods
+  public String fire() {
+      return "Boom!";
+  }
 
+  public void reduceShields(int amount) {
+      shieldStrength -= amount;
+  }
 
+}
+```
 
+### SIMPLE CLASS IN VB.NET
 
+```
+Publiuc Class Spaceship
 
+  ` instance variables
+  Public Name As String
+  Private ShieldStrength As Date
 
+  ` methods
+  Public Function Fire() As String
+      Return "Boom!"
+  End Function
 
+  Public Function ReduceShields(Amount as Integer)
+      ShieldStrength -= Amount
+  End Function
 
+End Class
+```
 
+### SIMPLE CLASS IN RUBY
 
+```
+class Spaceship
 
+  # instance variables
+  @name
+  @shield_strength
 
+  # methods
+  def fire
+      return "Boom!"
+  end
 
+  def reduce_shields(amount)
+      shield_strength -= amount
+  end
+
+end
+```
+
+### SIMPLE CLASS IN OBJECTIVE-C
+
+```
+@interface Spaceship : NSObject {    @implementation Spaceship
+    @public
+    NSString *name;                  -(NSString *) fire {
+    @private                             return @"Boom!";
+    int shieldStrength;              }
+}
+                                     -(void) reduceShields: (int)amount {
+// method declarations                   shieldStrength -= amount;
+-(NSString *) fire;                  }
+-(void) reduceShields:(int)amount;   @end
+
+@end
+
+           interface                          implementation
+
+```
