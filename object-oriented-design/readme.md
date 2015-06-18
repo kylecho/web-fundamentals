@@ -998,3 +998,559 @@ Say we have Album, Book, and Movie. They all share title, price, purchase(), and
 | FileDialog  |   Sub Class / Child Class
 +-------------+
 ```
+
+## INHERITANCE
+
+A little difference in syntax for inheritance.
+
+```
+       Java  public class Album extends Product {  ...
+
+         C#  public class Album : Product {  ...
+
+     VB.NET  public Class Album Inherits Product  ...
+
+       Ruby  class Album < Product   ...
+
+        C++  class Album : public Product {  ...
+
+Objective-C  @interface Album : Product {  ...
+
+```
+
+Overriding differ by languages. Some languages require keywords, others don't. Some languages require keywords both the Superclass and Subclass and so on.
+
+### CALLING A METHOD IN THE SUPER / PARENT / BASE CLASS
+
+```
+       Java  super.doSomething();
+
+         C#  base.doSomething();
+
+     VB.NET  MyBase.doSomething()
+
+       Ruby  super do_something
+
+        C++  [super someMethod];
+
+Objective-C  NamedBaseClass::doSomething();
+
+```
+
+## Using Abstract Classes
+
+When you have a class that never gets instantiated, you call it **abstract class**. Some languages offer a keyword for abstract classes.
+
+The language won't allow it to be instantiated, and you must inherit from it before instantiating an object.
+
+* C'#' or Java - `abstract class BankAccount { ...`
+
+* VB.NET - `Public MustInherit Class BankAccount ...`
+
+Opposite word to **abstract class** is **concrete classes**. It can be instantiated.
+
+## Using Interfaces
+
+Interface in OOP means, something that is actually created very similar to a class but with no actual functionality, no actual code, no behaviour. It is really just a list of method signatures.
+
+In Java, interface can be written as something like this:
+
+```
+interface Printable {
+	
+  // method signatures
+  void print();
+  void printToPDF(String filename);
+
+}
+
+```
+
+### IMPLEMENTING INTERFACES
+
+What's the point of this? The idea is that if we create a new class and then choose to use an interface then the term we use is implementing an interface, it is like signing a contract. What we do is create this class use the word implements to say we are supporting that we are promising to do something, we are promising to create methods with particular names. We have the freedom to do it anyway we want to but we are promising to do it. It's a contract that we are signing. And the point of contract is of course that you are never the only one to sign. With interfaces, the more classes implement the same interface the better. So I used the word implements here, I've signed the contract, then that means I have to provide those to methods in my class and some kind of implementation for them. Or I'll get a compile error. 
+
+```
+Class MyClass implements Printable {
+	
+    // method bodies
+    public void print() {
+        // provide implementation
+    }
+
+    public void printToPDF(String filename) {
+        // provide implementation
+    }
+
+    // additional functionality...
+
+}
+```
+
+### USING INTERFACES
+
+```
+// sometime later
+while (genericObject in listOfObjects) {
+	
+	  if ( genericObject instanceOf Printable ) {
+        // if it implements the interface, we can use it
+    genericObject.print();
+	  }
+
+}
+
+```
+
+Interfaces in UML
+
+```
++-----------------+
+|  <<Interface>>  |
+|    Printable    |
++-----------------+
+| print()         |
+| printToPDF()    |
++-----------------+
+         ^
+         .
+         .   implementing: use an empty arrow and dotted line to represent it
+         .
+         .
++-----------------+
+|     MyClass     |
++-----------------+
+|                 |
+|                 |
++-----------------+
+
+```
+
+## Using Aggregation and Composition
+
+### AGGREGATION DESCRIBES A "HAS A" RELATIONSHIP
+
+* A customer **has a** address.
+* A car **has a** engine.
+* A bank **has many** bank accounts.
+* A university **has many** students.
+
+```
+
++-----------------+             +-----------------+
+|    Classroom    |<>-----------|     Student     |
++-----------------+ 1         * +-----------------+
+
+                    aggregation
+
+```
+
+Aggregation is represented by an unfilled diamond at the end of the line.
+
+```
+                    filled diamond
++-----------------+ |           +-----------------+
+|    Document     |<>-----------|       Page      |
++-----------------+             +-----------------+
+
+                    composition
+                 implies ownership
+
+```
+
+Composition shows the ownership. If I delete the document, the page is deleted too. On the other hand, even if Classroom object is deleted, Student object won't be deleted.
+
+* Composition implies ownership
+* Aggregation does not - Worth showing in the diagram
+
+## Creating Sequence Diagrams
+
+It can be used as a thinking tool to communicate the process with a business user.
+
+```
++-----------------+             +--------------------+             +-----------------+
+|    a Customer   |-------------|a Cart:Shopping Cart|-------------|      :Order     |
++-----------------+             +--------------------+             +-----------------+
+         .                                .                                  .
+         .          checkout              .                                  .
+         .------------------------------->.           createNewOrder         .
+         .                                .--------------------------------->.
+         .              +----------------------------------------------------------------------+
+         .              |loop |           .       addItem(item, quantity)    .                 |
+         .              |_____/           .-------------------------------->+-+                |
+         .              |                 .                                 | |                |
+         .              |                 .             itemtotal           | |                |
+         .              |                 .<. . . . . . . . . . . . . . . . +-+                |
+         .              +----------------------------------------------------------------------+
+         .                                .                                  .
+         .                                .         calculateDiscount        .
+         .                                .--------------------------------->.
+         .                                .                                  .
+         .                                .            finalizeSale          .
+         .                                .-------------------------------->+-+         .                                .                                 | |
+         .                                .                total            | |
+         .< . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . +-+                +---------+
+         .                                .                                  .                 | Payment |
+         .           submitPayment        .                                  .                 +---------+
+         .------------------------------------------------------------------>. createPayment        .
+         .                                .                                  .--------------------->.
+         .                                .                                  .                      .
+         .                                .                                  .      results         .
+         .                                .    results                       .< . . . . . . . . . . X
+         .< . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+         .                                .                                  .
+         .                                .                                  .
+         .                                .                                  .
+
+```
+
+## Working with Advanced UML Diagrams
+
+### UML DIAGRAMS
+
+First four diagrams are the most common diagrams you will see and use. It's always about selecting the right diagram for the right need. It should be driven from a business problem.
+
+* Class Diagram
+* Use Case Diagram
+* Object Diagram
+* Secuence Diagram
+* State Machine Diagram
+* Activity Diagram - similar to procedural programming language. shows the decisions.
+* Deployment Diagram
+* Package Diagram
+* Component Diagram
+* Profile Diagram
+* Communication Diagram
+* Timing Diagram
+* Composite Structure Diagram
+* Interaction Overview Diagram
+
+## Using UML tools
+
+### UML TOOLS
+
+* Diagramming Tools - Visio, OmniGraffle
+* Web-based Diagramming - gliffy.com, creately.com, lucidchart.com
+* Programming Tools: IDE based - Visual Studio, Eclipse with UMLTools
+* Commercial Products - Altova UModel, Sparx Enterprise Architect, Visual Paradigm
+* Open-Source - ArgoUML, Dia
+
+[List of Unified Modeling Language tools](http://goo.gl/YAuOY)
+
+## Introduction to Design Patterns
+
+Design patterns are well tested solutions for common problems and issues we run into in software development. These are not business solutions. Design patterns don't deal with bank accounts and customer classes. They work at a different level than that. Think of them as best practices suggestions for how you might arrange your own classes and objects to accomplish a result.
+
+They don't deal with questions like, "I need to create an email app for iPhone or I need to make a payroll system". Instead, they deal with more general issues. Say you are working through your class design and you realize that if one of you objects changes, it needs to let several other objects. You wonder if there's a good way to do that.
+
+There are multiple ways you could deal with that but there is a well-tested proven approach that's been given the name above the observer design pattern, or another example.
+
+Let's say you realize an object will be changed by a lot of other objects, but you needed to be able to undo the last change. Again, this could be done many different ways, but there is a memento design pattern that describes a simple proven approach.
+
+Best practice is a for solving common software design problems that occur again and again across all kinds of applications from business apps to games.
+
+### DESIGN PATTERNS
+
+Design patterns became best known from the Design Patterns book by Erich Gramma, Richard Helm, Ralph Johnson, and John Vlissides. Often referred to as the "Gang of Four" or ("GoF") and you will see this referred to as the Gang of Four book published in the mid 90's. This book detailed 23 design patterns which were split into three groups.
+
+#### 1st Group: Creational Patterns
+
+These are approaches that deal with the creation of objects. Instead of you instantiating all objects very specifically and very explicitly, they give you more flexibility in how the objects were actually created.
+
+* Abstract Factory
+* Builder
+* Factory Method
+* Prototype
+* Singleton
+
+
+#### 2nd Group: Structural Patterns
+
+Structural patterns deals more with how classes are actually designed, how things like inheritance and composition and aggregation can be used to provide extra functionality. 
+
+* Adapter
+* Bridge
+* Composite
+* Decorator
+* Facade
+* Flyweight
+* Proxy
+
+#### 3rd Group: Behavioral Patterns
+
+Most of these design patterns are specifically concerned with communication between objects as the program is running.
+
+* Chain of responsibility
+* Command
+* Interpreter
+* Iterator
+* Mediator
+* Memento
+* Observer
+* State
+* Strategy
+* Template method
+* Visitor
+
+## The Singleton Pattern
+
+Here is the problem it is designed to solve. We create a class and we know the class can be instantiated once or twice or thousand times, but what if you only want one object of that class. What if you want to restrict this. In fact you need it to there to be only one object of this class. What if this one object needs to represent the currently running application orr perhaps the current display, and having more than one instantiated object just doesn't make sense and could even lead to problems with the application.
+
+There is actually quite a lot of situations whether should only be one object of a particular class. This may first sound like little an abstract class but remember an abstract class isn't allowed to be instantiated at all. So if we have only one, you might first think, why don't we just not create more than one. You could do that but it's not really enforcing anything you can't guarantee that behavior.
+
+So instead, we can use the singleton design pattern.
+
+### SINGLETON
+
+* We want to ensure a class only has one instance
+* We want one way of accessing it
+
+### IMPLEMENTING A SINGLETON IN JAVA
+
+```
+public class MySingleton {
+    // placeholder for current singleton object
+    private static MySingleton __me = null;
+    // private constructor - now no other object can instantiate
+    private MySingleton() { }
+    // this is how you ask for the singleton
+        // do I exist?
+        if ( __me == null ) {
+            // if not, instantiate and store
+            __me = new MySingleton();
+        }
+        return MySingleton;
+    }
+
+    // additional functionality
+    public someMethod() { //... }
+}
+```
+
+### USING A SINGLETON IN JAVA
+
+```
+// ask for the singleton
+MySingleton single = Mysingleton.getInstance();
+
+// use it
+single.someMethod();
+
+
+// or even just call directly
+MySingleton.getInstance().someMethod();
+```
+
+## MEMENTO DESIGN PATTERN
+
+* Handles "undo" in an object
+* Does not violate encapsulation
+
+```
++-------------+               +-------------+
+|  Caretaker  |               |  Originator |
++-------------+               +-------------+
+|             |               |    +-------+|
+|             |               |    |memento||
+|             |               |    +-------+|
++-------------+               +-------------+
+```
+
+## Object Oriented Design Principles
+
+Good object orientation practices do not automatically get imposed. It is up to us. We might not have enforced rules but we do have guidelines, and we have principles that we can use.
+
+Design principles are general principles, things to stay conscious of, and occasionally check back with as you create and iterate through your class design and building your software.
+
+First, we will discover some general development principles. Then we will cover two sets of well-known object-oriented design principles. Grouped together under the acronyms SOLID and GRASP.
+
+They use ideas as a starting point and give you some more guidelines so that you can ask "Did I design this class well?", and have a good answer to that question.
+
+## Exploring General Development Principles
+
+### GENERAL SOFTWARE DEVELOPMENT PRINCIPLES
+
+* DRY: Don't Repeat Yourself
+* YAGNI: You Ain't Gonna Need It
+
+### EXAMPLE CODE SMELLS
+
+* Long methods
+* Very short (or long) identifiers
+* Pointless comments
+* God object
+* Feature envy
+
+## Introduction to SOLID Principles
+
+#### **S**: Single Responsibility Principle
+
+An object should have one reason to exist, one reason to change - one primary responsibility
+
+#### **O**: Open / Closed Principle
+
+Open for extension, but closed to modification. In other words, we do not change the existing code. When requirements change, we add new object that inherits, and add methods.
+
+#### **L**: Liskov Substitution Principle
+
+Derived classes must be substitutable for their base classes.
+
+#### **I**: Interface Segregation Principle
+
+Multiple specific interfaces are better than one general purpose interface. We are not talking about User Interface here. Because classes can choose from multiple smaller interfaces, no class should be foreced to support huge list of methods it doesn't need.
+
+#### **D**: Dependency Inversion Principle
+
+Depend on abstractions, not on concretions.
+
+Instead of this:
+
+```
+             +-----------------+
+             |      Store      |
+             +-----------------+
+                     / \
+                   /     \
+                 /         \
+               /             \
+             /                 \
+           /                     \
+         /                         \
++-----------------+        +-----------------+
+| AudioFileReader |        | AudioFileWriter |
++-----------------+        +-----------------+
+```
+
+Do this:
+
+```
+             +-----------------+
+             |      Store      |
+             +-----------------+
+                     / \
+                   /     \
+                 /         \
+               /             \
+             /                 \
+           /                     \
+         /                         \
++-----------------+        +-----------------+
+|     Reader      |        |     Writer      |       layer of abstraction
++-----------------+        +-----------------+
+        |                           |
+        |                           |
+        |                           |
++-----------------+        +-----------------+
+| AudioFileReader |        | AudioFileWriter |
++-----------------+        +-----------------+
+```
+
+Benefits of having the layer of abstraction: It allows flexibility and substitution. However, if you have too many layers, it's likely you will violate YAGNI(You Ain't Gonna Need It) rule.
+
+```
+             +-----------------+
+             |      Store      |
+             +-----------------+
+                     / \
+                   /     \
+                 /         \
+               /             \
+             /                 \
+           /                     \
+         /                         \
++-----------------+        +-----------------+
+|     Reader      |        |     Writer      |       layer of abstraction
++-----------------+        +-----------------+
+        |                           |      \
+        |                           |         \
+        |                           |            \
++-----------------+        +-----------------+    +-----------------+
+| AudioFileReader |        | AudioFileWriter |    | MovieFileWriter |
++-----------------+        +-----------------+    +-----------------+
+
+```
+
+### SOLID
+
+These aren't rules, these aren't dogma, SOLID can be viewed as a checklist. No need to memorize it, but revisit it.
+
+* **S**: Single Responsibility Principle
+* **O**: Open / Closed Principle
+* **L**: Liskov Substitution Principle
+* **I**: Interface SEgregation Principle
+* **D**: Dependency Inversion Principle
+
+## Introduction to GRASP Principle
+
+GRASP tends to take a responsibility focus as in, who creates this object, who's in charge of how these objects talk to each other, who takes care of passing on messages received from a user interface.
+
+SOLID and GRASP don't conflict with each other. They are not competing sets. You might choose to use one or both or neither.
+
+### GRASP PRINCIPLES OF OBJECT-ORIENTED DESIGN
+
+You may find GRASP a useful learning tool to keep in mind while drawing up UML diagrams to provide some techniques for figuring out the responsibilities of your objects.
+
+#### General Responsibility Assignment Software Patterns
+
+* Creator - Who is responsible for creating an object? Does one object contain another? The idea of composition.
+* Controller - Don't connect UI elements directly to business objects. (problem: high coupling, low cohesion) MVC is an example using this.
+* Pure Fabrication - When the behavior does not belong anywhere else, create a new class.
+* Information Expert - Assign the responsibility to the class that has the information needed to fulfill it.
+* High Cohesion - Cohesion: the level of that a class contains focused, related behaviors. God Object is high cohesion.
+* Indirection - To reduce coupling, introduce an intermediate object.
+* Low Coupling - Coupling: the level of dependencies between objects. Means to reduce the amount of required connections between objects.
+* Polymorphism - Automatically correct behavior based on type. As opposed to: conditional logic that checks for particular types.
+* Protected Variations - Protect the system for changes and variations. Identify the most likely points of change. Use multiple techniques: encapsulation, LSP, OCP
+
+### OBJECT-ORIENTED LANGUAGES
+
+```
++-------------+-------------+---------+---------+---------+----------+------------+
+| Language    | Inheritance | Typing  | Call to | Private | Abstract | Interfaces |
+|             |             |         | super   | Methods | Classes  |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| Java        | Single      | static  | super   | Yes     | Yes      | Yes        |
+|             |             |         |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| C#          | Single      | static  | base    | Yes     | Yes      | Yes        |
+|             |             |         |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| VB.NET      | Single      | static  | MyBase  | Yes     | Yes      | Yes        |
+|             |             |         |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| Objective-C | Single      | static/ | super   | No      | No       | Protocols  |
+|             |             | dynamic |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| C++         | Multiple    | static  | name of | Yes     | Yes      | Abstract   |
+|             |             |         | class:: |         |          | Class      |
++-------------+-------------+---------+---------+---------+----------+------------+
+| Ruby        | Mix-ins     | dynamic | super   | Yes     | n/a      | n/a        |
+|             |             |         |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+| JavaScript  | Prototype   | dynamic | n/a     | Yes     | n/a      | n/a        |
+|             |             |         |         |         |          |            |
++-------------+-------------+---------+---------+---------+----------+------------+
+
+```
+
+## Additional Resources
+
+* For the initial stage of determining requirements, if you do consulting work and need to be able to step into the world of client or company this book will be useful.
+
+"SOFTWARE REQUIREMENTS" by Karl E. Wiegers, Joy Beatty
+
+* For the world of Use Cases:
+
+"Writing Effective Use Cases" by Alistair Cockburn
+
+* For the more concise User Story format:
+
+"USER STORIES APPLIED" by Mike Cohn
+
+* For UML:
+
+"UML DISTILLED" by Martin Fowler (also the author of "Refactoring")
+
+* For Design Pattern:
+
+"HEAD FIRST DESIGN PATTERNS"
