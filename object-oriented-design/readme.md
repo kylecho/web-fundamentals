@@ -1187,7 +1187,8 @@ It can be used as a thinking tool to communicate the process with a business use
          .                                .--------------------------------->.
          .                                .                                  .
          .                                .            finalizeSale          .
-         .                                .-------------------------------->+-+         .                                .                                 | |
+         .                                .-------------------------------->+-+
+         .                                .                                 | |
          .                                .                total            | |
          .< . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . +-+                +---------+
          .                                .                                  .                 | Payment |
