@@ -2,7 +2,8 @@
 
 A Self made list to study before I join Hack Reactor. I consider them as the "Basics" of the web development. More specifically, I have named it the "Pre" precoursework for Hack Reactor because I am stuyding it prior to the actual pre-coursework. The below list will redirect to the sub-repositories within this repository. There you can find the summary and the link to the original resource.
 
-* [20 THINGS I LEARNED ABOUT BROWSERS AND THE WEB](http://www.20thingsilearned.com/en-US)
+* [20 Things I Learned About Browsers and the Web](http://www.20thingsilearned.com/en-US)
+* [Stuff Everybody Knows Except You](https://www.youtube.com/watch?v=NWo-RIHiEJ4)
 * [Git](https://guides.github.com/)
 * HTML
 * CSS
