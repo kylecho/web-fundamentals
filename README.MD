@@ -8,7 +8,7 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * HTML
 * CSS
 * [Bootstrap](https://github.com/kylecho/hackreactor-prep/tree/master/bootstrap)
-* jQuery
+* [jQuery](https://github.com/kylecho/hackreactor-prep/tree/master/30days-to-learn-jquery)
 * [Browser Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/BOM)
 * [Document Object Model](https://github.com/kylecho/hackreactor-prep/tree/master/objectmodels/DOM)
 * [Object-Oriented JavaScript](https://www.udacity.com/course/object-oriented-javascript--ud015)

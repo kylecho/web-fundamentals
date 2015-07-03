@@ -2,16 +2,47 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Bind...Live...Delegate...On...Dang That's Confusing</title>
+	<title>Appending Content</title>
+	<style>
+	article {
+		width: 600px;
+		margin: auto;
+	}
+	blockquote.co {
+		float: right;
+		background: #e3e3e3;
+		font-size: 2em;
+		width: 35%;
+		text-align: center;
+	}
+	</style>
 </head>
 <body>
 
-<div class="container">
-	<h2>Click Me</h2>
-	<h2>Click Me</h2>
-	<h2>Click Me</h2>
-	<h2>Click Me</h2>
-</div>
+
+<article>
+	<h1>My Awesome Post</h1>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.
+	</p>
+	<p>
+		<span class="co">Lorem ipsum dolor sit amet</span>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+	</p>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.
+	</p>
+	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.
+	</p>
+	<p>
+		consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <span class="co">Hello from JavaScript.</span>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+	</p>
+	
+</article>
+
 
 <script src="jquery.js"></script>
 
@@ -19,15 +50,28 @@
 <script>
 
 (function() {
-	
-	// bind, live, delegate all point to on method
-	$('div.container').delegate('h2', 'click', function() {
-		console.log('clicked');
-		$(this).clone().appendTo('.container');
+
+	var co = $('article').find('span.co').each(function() {
+		var $this = $(this);
+		
+		$('<blockquote></blockquote>', {
+			class: 'co',
+			text: $this.text()
+		}).prependTo( $this.closest('p') );
 	});
 
 })();
 
+// They are similar but differ in which selectors to use
+//.append()
+//.prepend()
+//.insertAfter()
+//.insertBefore()
+//.appendTo()
+//.prependTo()
+//.before()
+//.after()
+	
 </script>
 	
 </body>
