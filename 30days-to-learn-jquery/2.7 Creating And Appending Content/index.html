@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Bind...Live...Delegate...On...Dang That's Confusing</title>
+</head>
+<body>
+
+<div class="container">
+	<h2>Click Me</h2>
+	<h2>Click Me</h2>
+	<h2>Click Me</h2>
+	<h2>Click Me</h2>
+</div>
+
+<script src="jquery.js"></script>
+
+
+<script>
+
+(function() {
+	
+	// bind, live, delegate all point to on method
+	$('div.container').delegate('h2', 'click', function() {
+		console.log('clicked');
+		$(this).clone().appendTo('.container');
+	});
+
+})();
+
+</script>
+	
+</body>
+</html>
