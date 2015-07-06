@@ -5,7 +5,7 @@ A Self made list to study before I join Hack Reactor. I consider them as the "Ba
 * [20 Things I Learned About Browsers and the Web](http://www.20thingsilearned.com/en-US)
 * [Stuff Everybody Knows Except You](https://www.youtube.com/watch?v=NWo-RIHiEJ4)
 * [Git](https://guides.github.com/)
-* HTML
+* [HTML](https://github.com/kylecho/hackreactor-prep/tree/master/html-test)
 * CSS
 * [Bootstrap](https://github.com/kylecho/hackreactor-prep/tree/master/bootstrap)
 * [jQuery](https://github.com/kylecho/hackreactor-prep/tree/master/30days-to-learn-jquery)
