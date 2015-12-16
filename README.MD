@@ -1,4 +1,4 @@
-#CS Fundamentals
+#Web Fundamentals
 
 The below list will redirect to the sub-repositories within this repository. There you can find the summary and the link to the original resource.
 
